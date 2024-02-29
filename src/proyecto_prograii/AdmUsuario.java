@@ -7,6 +7,7 @@ package proyecto_prograii;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -82,7 +83,7 @@ public class AdmUsuario {
             sc.close();
         }
     }
-    public void escribirArchivo(){
+    public void escribirArchivo() throws IOException{
         FileWriter  fw = null;
         BufferedWriter bw = null;
         try {
@@ -110,8 +111,11 @@ public class AdmUsuario {
                 }
                 bw.write(";");
             }
+            bw.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        bw.close();
+        fw.close();
     }
 }
