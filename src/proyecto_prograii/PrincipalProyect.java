@@ -5,7 +5,11 @@
 package proyecto_prograii;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -80,6 +84,19 @@ public class PrincipalProyect extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JSeparator();
         img_MU = new javax.swing.JLabel();
         btn_modificarU = new javax.swing.JButton();
+        jd_databases = new javax.swing.JDialog();
+        pn_DB = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jt_db = new javax.swing.JTree();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ta_SQL = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtable_db = new javax.swing.JTable();
+        lb_tituloDB = new javax.swing.JLabel();
+        btn_ejecutar = new javax.swing.JButton();
+        lb_sql = new javax.swing.JLabel();
+        pn_exitDB = new javax.swing.JPanel();
+        lb_exitDB = new javax.swing.JLabel();
         jp_is = new javax.swing.JPanel();
         lb_tituloIS = new javax.swing.JLabel();
         lb_nombreIS = new javax.swing.JLabel();
@@ -103,6 +120,11 @@ public class PrincipalProyect extends javax.swing.JFrame {
         btn_databases.setBackground(new java.awt.Color(204, 0, 102));
         btn_databases.setForeground(new java.awt.Color(0, 0, 0));
         btn_databases.setText("Mis Databases");
+        btn_databases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_databasesMouseClicked(evt);
+            }
+        });
 
         btn_GU.setBackground(new java.awt.Color(255, 153, 153));
         btn_GU.setForeground(new java.awt.Color(0, 0, 0));
@@ -473,6 +495,128 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
         jd_modificarUsuario.getContentPane().add(pn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 380));
 
+        jd_databases.setUndecorated(true);
+        jd_databases.setResizable(false);
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Databases");
+        jt_db.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane2.setViewportView(jt_db);
+
+        ta_SQL.setColumns(20);
+        ta_SQL.setRows(5);
+        jScrollPane3.setViewportView(ta_SQL);
+
+        jtable_db.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jtable_db);
+
+        lb_tituloDB.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        lb_tituloDB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_tituloDB.setText("Mis Databases");
+
+        btn_ejecutar.setText("Ejecutar Comando SQL");
+
+        lb_sql.setText("SQL");
+
+        pn_exitDB.setBackground(new java.awt.Color(255, 255, 255));
+
+        lb_exitDB.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lb_exitDB.setForeground(new java.awt.Color(0, 0, 0));
+        lb_exitDB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_exitDB.setText("X");
+        lb_exitDB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_exitDBMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_exitDBMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_exitDBMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pn_exitDBLayout = new javax.swing.GroupLayout(pn_exitDB);
+        pn_exitDB.setLayout(pn_exitDBLayout);
+        pn_exitDBLayout.setHorizontalGroup(
+            pn_exitDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_exitDBLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lb_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pn_exitDBLayout.setVerticalGroup(
+            pn_exitDBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lb_exitDB, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout pn_DBLayout = new javax.swing.GroupLayout(pn_DB);
+        pn_DB.setLayout(pn_DBLayout);
+        pn_DBLayout.setHorizontalGroup(
+            pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_DBLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pn_DBLayout.createSequentialGroup()
+                        .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(13, Short.MAX_VALUE))
+                    .addGroup(pn_DBLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pn_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pn_DBLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lb_sql, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_ejecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))))
+        );
+        pn_DBLayout.setVerticalGroup(
+            pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_DBLayout.createSequentialGroup()
+                .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pn_DBLayout.createSequentialGroup()
+                        .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lb_sql)
+                            .addComponent(btn_ejecutar)))
+                    .addComponent(pn_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+            .addGroup(pn_DBLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jd_databasesLayout = new javax.swing.GroupLayout(jd_databases.getContentPane());
+        jd_databases.getContentPane().setLayout(jd_databasesLayout);
+        jd_databasesLayout.setHorizontalGroup(
+            jd_databasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_DB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jd_databasesLayout.setVerticalGroup(
+            jd_databasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_DB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -587,16 +731,27 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void bttn_entrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttn_entrarMouseClicked
         // TODO add your handling code here:
+        
+        AdmUsuario am = new AdmUsuario("./usuarios/"+tf_nombreIS.getText()+".txt");
+        try {
+            am.cargarArchivo();
+        } catch (IOException ex) {
+           JOptionPane.showMessageDialog(this, "Este archivo no existe!");
+        }
         int cont = 0;
-        for (int i = 0; i < usuarios.size(); i++) {
-            if(tf_nombreIS.getText().equals(((usuario)usuarios.get(i)).getNombre())&&pf_contraIS.getText().equals(((usuario)usuarios.get(i)).getContra())){
+        
+        for (int i = 0; i < am.listaUsuarios.size(); i++) {
+            if(tf_nombreIS.getText().equals(am.listaUsuarios.get(i).getNombre())&&pf_contraIS.getText().equals(am.listaUsuarios.get(i).getContra())){
                 cont = 1;
+                //System.out.println(cont);
                 u_seleccionado = (usuario)usuarios.get(i);
                 index_usuario_actual = i;
+                FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
             }else{
                 cont = 0;
             }
         }
+        
 
         if(cont == 1){
             abreMenuPrincipal();
@@ -609,6 +764,32 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void lb_exitISMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitISMouseClicked
         // TODO add your handling code here:
+        String nombre = "Luis";
+        String contra = "lfcs123";
+        AdmUsuario am = new AdmUsuario(FileSeleccionado);
+        try {
+            am.cargarArchivo();
+        } catch (IOException ex) {
+            
+        }
+        
+        for (usuario User : am.getListaUsuarios()) {
+            User.setNombre(nombre);
+            User.setContra(contra);
+        }
+        try {
+            am.escribirArchivo();
+        } catch (IOException ex) {
+            
+        }
+        File archivoantiguo = new File(FileSeleccionado);
+        File archivonuevonombre = new File("./usuarios/"+nombre+".txt");
+        boolean renombrado = archivoantiguo.renameTo(archivonuevonombre);
+        if(renombrado){
+            
+        }else{
+            
+        }
         System.exit(0);
     }//GEN-LAST:event_lb_exitISMouseClicked
 
@@ -663,6 +844,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void btn_agregarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregarUsuarioMouseClicked
         // TODO add your handling code here:
+        
         try {
             String nombre = tf_crear.getText();
             String contra = pf_crear.getText();
@@ -702,6 +884,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
             chb_drop.setSelected(false);
             chb_insert.setSelected(false);
             chb_select.setSelected(false);
+            AdmUsuario am = new AdmUsuario("./usuarios/"+nombre+".txt");
+            am.listaUsuarios.add(new usuario(nombre, contra, gestionU, create, select, insert, delete, drop));
+            am.escribirArchivo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido agregar usuario.");
         }
@@ -710,24 +895,46 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private void btn_eliminarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarUsuarioMouseClicked
         // TODO add your handling code here:
         if(jl_usuarios.getSelectedIndex()>=0){
+            
             DefaultListModel m = (DefaultListModel) jl_usuarios.getModel();
             int index = jl_usuarios.getSelectedIndex();
             u_eliminar = (usuario)m.get(index);
             m.remove(index);
             jl_usuarios.setModel(m);
-            
             for (int i = 0; i < usuarios.size(); i++) {
                 if(usuarios.get(i).getNombre().equals(u_eliminar.getNombre())&& usuarios.get(i).getContra().equals(u_eliminar.getContra())){
                     usuarios.remove(i);
                     break;
                 } 
             }
+            File eliminar = new File("./usuarios/"+u_eliminar.getNombre()+".txt");
+            if(eliminar.exists()){
+                boolean eliminado = eliminar.delete();
+                if(eliminado){
+                    JOptionPane.showMessageDialog(jd_gestionUsuarios, "Se ha eliminado exitosamente!");
+                }else{
+                   JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido eliminar!");
+                }
+            }else{
+                JOptionPane.showMessageDialog(jd_gestionUsuarios, "No existe el archivo!");
+            }
         }
     }//GEN-LAST:event_btn_eliminarUsuarioMouseClicked
 
     private void btn_GUMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GUMouseClicked
         // TODO add your handling code here:
-        if(u_seleccionado.isGestionU()==false){
+        AdmUsuario am = new AdmUsuario(FileSeleccionado);
+        boolean gestionarU = false;
+        try {
+            am.cargarArchivo();
+        } catch (IOException ex) {
+            
+        }
+        for (usuario user : am.getListaUsuarios()) {
+            gestionarU = user.gestionU;
+        }
+        
+        if(gestionarU==false){
             JOptionPane.showMessageDialog(jd_menuprincipal, "Este usuario no tiene permisos para gestionar usuarios!");
         }else{
            abreGestionUsuarios(); 
@@ -759,8 +966,33 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void btn_modificarUMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarUMouseClicked
         // TODO add your handling code here:
+        AdmUsuario am = new AdmUsuario(FileSeleccionado);
+        try {
+            am.cargarArchivo();
+        } catch (IOException ex) {
+            
+        }
         String nuevo_nombre = tf_modificar.getText();
         String nueva_contra = pf_modificar.getText();
+        for (usuario User : am.getListaUsuarios()) {
+            User.setNombre(nuevo_nombre);
+            User.setContra(nueva_contra);
+        }
+        try {
+            am.escribirArchivo();
+        } catch (IOException ex) {
+            
+        }
+        File archivoantiguo = new File(FileSeleccionado);
+        File archivonuevonombre = new File("./usuarios/"+nuevo_nombre+".txt");
+        boolean renombrado = archivoantiguo.renameTo(archivonuevonombre);
+        if(renombrado){
+            JOptionPane.showMessageDialog(jd_modificarUsuario, "Se ha modificado exitosamente.");
+        }else{
+            JOptionPane.showMessageDialog(jd_modificarUsuario, "No se ha podido modificar!");
+        }
+        FileSeleccionado = "./usuarios/"+nuevo_nombre+".txt";
+        
         usuarios.get(index_usuario_actual).setNombre(nuevo_nombre);
         usuarios.get(index_usuario_actual).setContra(nueva_contra);
         
@@ -768,28 +1000,57 @@ public class PrincipalProyect extends javax.swing.JFrame {
         ((usuario)m.get(index_usuario_actual)).setNombre(nuevo_nombre);
         ((usuario)m.get(index_usuario_actual)).setContra(nueva_contra);
         jl_usuarios.setModel(m);
-        JOptionPane.showMessageDialog(jd_modificarUsuario, "Se ha modificado exitosamente.");
-        
+        tf_modificar.setText("");
+        pf_modificar.setText("");
     }//GEN-LAST:event_btn_modificarUMouseClicked
+
+    private void lb_exitDBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitDBMouseClicked
+        // TODO add your handling code here:
+        jd_menuprincipal.setVisible(true);
+        jd_databases.setVisible(false);
+    }//GEN-LAST:event_lb_exitDBMouseClicked
+
+    private void lb_exitDBMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitDBMouseEntered
+        // TODO add your handling code here:
+        pn_exitDB.setBackground(Color.red);
+        lb_exitDB.setForeground(Color.white);
+    }//GEN-LAST:event_lb_exitDBMouseEntered
+
+    private void lb_exitDBMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitDBMouseExited
+        // TODO add your handling code here:
+        pn_exitDB.setBackground(Color.white);
+        lb_exitDB.setForeground(Color.black);
+    }//GEN-LAST:event_lb_exitDBMouseExited
+
+    private void btn_databasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_databasesMouseClicked
+        // TODO add your handling code here:
+        abreDatabase();
+    }//GEN-LAST:event_btn_databasesMouseClicked
     
-    private void abreMenuPrincipal(){
+    public void abreMenuPrincipal(){
         jd_menuprincipal.pack();
         jd_menuprincipal.setModal(true);
         jd_menuprincipal.setLocationRelativeTo(this);
         jd_menuprincipal.setVisible(true);
     }
-    private void abreGestionUsuarios(){
+    public void abreGestionUsuarios(){
         jd_gestionUsuarios.pack();
         jd_gestionUsuarios.setModal(true);
-        jd_gestionUsuarios.setLocationRelativeTo(this);
+        jd_gestionUsuarios.setLocationRelativeTo(jd_menuprincipal);
         jd_gestionUsuarios.setVisible(true);
     }
     
-    private void abreModificarUsuario(){
+    public void abreModificarUsuario(){
         jd_modificarUsuario.pack();
         jd_modificarUsuario.setModal(true);
-        jd_modificarUsuario.setLocationRelativeTo(this);
+        jd_modificarUsuario.setLocationRelativeTo(jd_menuprincipal);
         jd_modificarUsuario.setVisible(true);
+    }
+    public void abreDatabase(){
+        jd_databases.pack();
+        jd_databases.setModal(true);
+        jd_databases.setLocationRelativeTo(jd_menuprincipal);
+        jd_databases.setVisible(true);
     }
     /**
      * @param args the command line arguments
@@ -831,6 +1092,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JButton btn_GU;
     private javax.swing.JButton btn_agregarUsuario;
     private javax.swing.JButton btn_databases;
+    private javax.swing.JButton btn_ejecutar;
     private javax.swing.JButton btn_eliminarUsuario;
     private javax.swing.JButton btn_modif;
     private javax.swing.JButton btn_modificarU;
@@ -845,19 +1107,26 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JLabel img_MU;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JDialog jd_databases;
     private javax.swing.JDialog jd_gestionUsuarios;
     private javax.swing.JDialog jd_menuprincipal;
     private javax.swing.JDialog jd_modificarUsuario;
     private javax.swing.JList<String> jl_usuarios;
     private javax.swing.JPanel jp_is;
+    private javax.swing.JTree jt_db;
+    private javax.swing.JTable jtable_db;
     private javax.swing.JLabel lb_contraGU;
     private javax.swing.JLabel lb_contraMU;
+    private javax.swing.JLabel lb_exitDB;
     private javax.swing.JLabel lb_exitGU;
     private javax.swing.JLabel lb_exitIS;
     private javax.swing.JLabel lb_exitMP;
@@ -867,6 +1136,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JLabel lb_nombreMU;
     private javax.swing.JLabel lb_passwordIS;
     private javax.swing.JLabel lb_permisosGU;
+    private javax.swing.JLabel lb_sql;
+    private javax.swing.JLabel lb_tituloDB;
     private javax.swing.JLabel lb_tituloGU;
     private javax.swing.JLabel lb_tituloIS;
     private javax.swing.JLabel lb_tituloMP;
@@ -874,13 +1145,16 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JPasswordField pf_contraIS;
     private javax.swing.JPasswordField pf_crear;
     private javax.swing.JPasswordField pf_modificar;
+    private javax.swing.JPanel pn_DB;
     private javax.swing.JPanel pn_GU;
+    private javax.swing.JPanel pn_exitDB;
     private javax.swing.JPanel pn_exitGU;
     private javax.swing.JPanel pn_exitIS;
     private javax.swing.JPanel pn_exitMP;
     private javax.swing.JPanel pn_exitMU;
     private javax.swing.JPanel pn_menu;
     private javax.swing.JPanel pn_modificar;
+    private javax.swing.JTextArea ta_SQL;
     private javax.swing.JTextField tf_crear;
     private javax.swing.JTextField tf_modificar;
     private javax.swing.JTextField tf_nombreIS;
@@ -889,4 +1163,5 @@ public class PrincipalProyect extends javax.swing.JFrame {
     usuario u_seleccionado;
     usuario u_eliminar;
     int index_usuario_actual;
+    String FileSeleccionado;
 }
