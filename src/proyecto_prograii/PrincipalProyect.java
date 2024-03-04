@@ -747,6 +747,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 u_seleccionado = (usuario)usuarios.get(i);
                 index_usuario_actual = i;
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
+                cont_num_inicio_sesion = 1;
             }else{
                 cont = 0;
             }
@@ -766,31 +767,36 @@ public class PrincipalProyect extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombre = "Luis";
         String contra = "lfcs123";
-        AdmUsuario am = new AdmUsuario(FileSeleccionado);
-        try {
-            am.cargarArchivo();
-        } catch (IOException ex) {
-            
-        }
-        
-        for (usuario User : am.getListaUsuarios()) {
-            User.setNombre(nombre);
-            User.setContra(contra);
-        }
-        try {
-            am.escribirArchivo();
-        } catch (IOException ex) {
-            
-        }
-        File archivoantiguo = new File(FileSeleccionado);
-        File archivonuevonombre = new File("./usuarios/"+nombre+".txt");
-        boolean renombrado = archivoantiguo.renameTo(archivonuevonombre);
-        if(renombrado){
-            
+        if (cont_num_inicio_sesion == 0) {
+            System.exit(0);
         }else{
-            
+          AdmUsuario am = new AdmUsuario(FileSeleccionado);
+            try {
+                am.cargarArchivo();
+            } catch (IOException ex) {
+
+            }
+
+            for (usuario User : am.getListaUsuarios()) {
+                User.setNombre(nombre);
+                User.setContra(contra);
+            }
+            try {
+                am.escribirArchivo();
+            } catch (IOException ex) {
+
+            }
+            File archivoantiguo = new File(FileSeleccionado);
+            File archivonuevonombre = new File("./usuarios/"+nombre+".txt");
+            boolean renombrado = archivoantiguo.renameTo(archivonuevonombre);
+            if(renombrado){
+
+            }else{
+
+            }
+            System.exit(0);  
         }
-        System.exit(0);
+   
     }//GEN-LAST:event_lb_exitISMouseClicked
 
     private void lb_exitISMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitISMouseEntered
@@ -937,7 +943,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
         if(gestionarU==false){
             JOptionPane.showMessageDialog(jd_menuprincipal, "Este usuario no tiene permisos para gestionar usuarios!");
         }else{
-           abreGestionUsuarios(); 
+           abreGestionUsuarios();   
         }
     }//GEN-LAST:event_btn_GUMouseClicked
 
@@ -1164,4 +1170,5 @@ public class PrincipalProyect extends javax.swing.JFrame {
     usuario u_eliminar;
     int index_usuario_actual;
     String FileSeleccionado;
+    int cont_num_inicio_sesion = 0;
 }
