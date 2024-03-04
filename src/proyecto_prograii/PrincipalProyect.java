@@ -25,7 +25,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
     public PrincipalProyect() {
         initComponents();
         this.setLocationRelativeTo(null);
-        usuarios.add(new usuario("Luis", "lfcs123", true, true, true, true, true, true));
+        //usuarios.add(new usuario("Luis", "lfcs123", true, true, true, true, true, true));
         DefaultListModel modelo = (DefaultListModel)jl_usuarios.getModel();
         modelo.addElement(new usuario("Luis", "lfcs123", true, true, true, true, true, true));
         jl_usuarios.setModel(modelo);
@@ -743,9 +743,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
         for (int i = 0; i < am.listaUsuarios.size(); i++) {
             if(tf_nombreIS.getText().equals(am.listaUsuarios.get(i).getNombre())&&pf_contraIS.getText().equals(am.listaUsuarios.get(i).getContra())){
                 cont = 1;
-                //System.out.println(cont);
-                u_seleccionado = (usuario)usuarios.get(i);
-                index_usuario_actual = i;
+                //u_seleccionado = (usuario)usuarios.get(i);
+                //index_usuario_actual = i;
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
                 cont_num_inicio_sesion = 1;
             }else{
@@ -878,9 +877,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
             if(chb_drop.isSelected()){
                 drop = true;
             }
-            usuarios.add(new usuario(nombre, contra, gestionU, create, select, insert, delete, drop));
+            //usuarios.add(new usuario(nombre, contra, gestionU, create, select, insert, delete, drop));
             DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
             m.addElement(new usuario(nombre, contra, gestionU, create, select, insert, delete, drop));
+            
             jl_usuarios.setModel(m);
             tf_crear.setText("");
             pf_crear.setText("");
@@ -907,12 +907,12 @@ public class PrincipalProyect extends javax.swing.JFrame {
             u_eliminar = (usuario)m.get(index);
             m.remove(index);
             jl_usuarios.setModel(m);
-            for (int i = 0; i < usuarios.size(); i++) {
+            /*for (int i = 0; i < usuarios.size(); i++) {
                 if(usuarios.get(i).getNombre().equals(u_eliminar.getNombre())&& usuarios.get(i).getContra().equals(u_eliminar.getContra())){
                     usuarios.remove(i);
                     break;
                 } 
-            }
+            }*/
             File eliminar = new File("./usuarios/"+u_eliminar.getNombre()+".txt");
             if(eliminar.exists()){
                 boolean eliminado = eliminar.delete();
@@ -980,6 +980,25 @@ public class PrincipalProyect extends javax.swing.JFrame {
         }
         String nuevo_nombre = tf_modificar.getText();
         String nueva_contra = pf_modificar.getText();
+        
+        DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
+        int cont = 0;
+        for (int i = 0; i < m.getSize(); i++) {
+            for (int j = 0; j < am.listaUsuarios.size(); j++) {
+                if(((usuario)m.getElementAt(i)).getNombre().equals(am.listaUsuarios.get(j).getNombre())&&
+                      ((usuario)m.getElementAt(i)).getContra().equals(am.listaUsuarios.get(j).getContra())){
+                    ((usuario)m.getElementAt(i)).setNombre(nuevo_nombre);
+                    ((usuario)m.getElementAt(i)).setContra(nueva_contra);
+                    cont++;
+                    break;
+                }
+                if(cont == 1){
+                    break;
+                }
+            }
+            
+        }
+       
         for (usuario User : am.getListaUsuarios()) {
             User.setNombre(nuevo_nombre);
             User.setContra(nueva_contra);
@@ -999,12 +1018,12 @@ public class PrincipalProyect extends javax.swing.JFrame {
         }
         FileSeleccionado = "./usuarios/"+nuevo_nombre+".txt";
         
-        usuarios.get(index_usuario_actual).setNombre(nuevo_nombre);
+        /*usuarios.get(index_usuario_actual).setNombre(nuevo_nombre);
         usuarios.get(index_usuario_actual).setContra(nueva_contra);
         
-        DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
+        
         ((usuario)m.get(index_usuario_actual)).setNombre(nuevo_nombre);
-        ((usuario)m.get(index_usuario_actual)).setContra(nueva_contra);
+        ((usuario)m.get(index_usuario_actual)).setContra(nueva_contra);*/
         jl_usuarios.setModel(m);
         tf_modificar.setText("");
         pf_modificar.setText("");
@@ -1166,9 +1185,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JTextField tf_nombreIS;
     // End of variables declaration//GEN-END:variables
     public ArrayList<usuario> usuarios = new ArrayList();
-    usuario u_seleccionado;
+    //usuario u_seleccionado;
     usuario u_eliminar;
-    int index_usuario_actual;
+    //int index_usuario_actual;
     String FileSeleccionado;
     int cont_num_inicio_sesion = 0;
 }
