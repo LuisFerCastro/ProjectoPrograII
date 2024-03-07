@@ -616,9 +616,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                     .addComponent(btn_ejecutar)))
                             .addComponent(pn_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -764,6 +764,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 //index_usuario_actual = i;
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
                 cont_num_inicio_sesion = 1;
+                nombre_user = am.listaUsuarios.get(i).getNombre();
             }else{
                 cont = 0;
             }
@@ -771,6 +772,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
         
 
         if(cont == 1){
+            
             abreMenuPrincipal();
         }else{
             JOptionPane.showMessageDialog(this, "Usuario no existe.");
@@ -909,6 +911,11 @@ public class PrincipalProyect extends javax.swing.JFrame {
             AdmUsuario am = new AdmUsuario("./usuarios/"+nombre+".txt");
             am.listaUsuarios.add(new usuario(nombre, contra, gestionU, create, select, insert, delete, drop));
             am.escribirArchivo();
+            File archivo = new File("./"+nombre);
+            boolean creado = archivo.mkdir();
+            if(creado){
+                JOptionPane.showMessageDialog(jd_gestionUsuarios, "Se ha creado el usuario!");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido agregar usuario.");
         }
@@ -918,13 +925,23 @@ public class PrincipalProyect extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser jfc = new JFileChooser("./usuarios");
         int seleccion = jfc.showOpenDialog(jd_gestionUsuarios);
+       
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File archivo = jfc.getSelectedFile();
-            boolean eliminado = archivo.delete();
-            if(eliminado){
-                JOptionPane.showMessageDialog(jd_gestionUsuarios, "Se ha eliminado el archivo!");
-            }else{
-                JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido eliminar el archivo!");
+            String nom = archivo.getName();
+            String cadena[]=nom.split("\\.");
+            String comparar = cadena[0];
+            if (comparar.equals(nombre_user)){
+                JOptionPane.showMessageDialog(jd_gestionUsuarios,"No puedes eliminar a tu propio usuario");
+            }
+            else{
+                JOptionPane.showMessageDialog(jd_gestionUsuarios, nom);
+                boolean eliminado = archivo.delete();
+                if(eliminado){
+                    JOptionPane.showMessageDialog(jd_gestionUsuarios, "Se ha eliminado el archivo!");
+                }else{
+                    JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido eliminar el archivo!");
+                }
             }
         }
         /*if(jl_usuarios.getSelectedIndex()>=0){
@@ -1008,23 +1025,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
         String nuevo_nombre = tf_modificar.getText();
         String nueva_contra = pf_modificar.getText();
         
-        /*DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
-        int cont = 0;
-        for (int i = 0; i < m.getSize(); i++) {
-            for (int j = 0; j < am.listaUsuarios.size(); j++) {
-                if(((usuario)m.getElementAt(i)).getNombre().equals(am.listaUsuarios.get(j).getNombre())&&
-                      ((usuario)m.getElementAt(i)).getContra().equals(am.listaUsuarios.get(j).getContra())){
-                    ((usuario)m.getElementAt(i)).setNombre(nuevo_nombre);
-                    ((usuario)m.getElementAt(i)).setContra(nueva_contra);
-                    cont++;
-                    break;
-                }
-                if(cont == 1){
-                    break;
-                }
-            }
-            
-        }*/
        
         for (usuario User : am.getListaUsuarios()) {
             User.setNombre(nuevo_nombre);
@@ -1245,4 +1245,5 @@ public class PrincipalProyect extends javax.swing.JFrame {
     StyledDocument doc;
     Style estilo;
     String []keywords ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO","INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"};
+    String nombre_user;
 }
