@@ -11,9 +11,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
@@ -37,9 +40,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
         modelo.addElement(new usuario("Luis", "lfcs123", true, true, true, true, true, true));
         jl_usuarios.setModel(modelo);*/
         doc = tp_sql.getStyledDocument();
-        estilo = tp_sql.addStyle("Estilo", null);
-        Color crimson = new Color(220,20,60);
-        StyleConstants.setForeground(estilo, crimson);
+        estilo =tp_sql.addStyle("Estilo", null);
+   
     }
 
     /**
@@ -1079,21 +1081,30 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void tp_sqlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tp_sqlKeyPressed
         // TODO add your handling code here:
-        String modificada;
-        int index;
+        int cont = 0;
+        String texto = tp_sql.getText();
         if (evt.getKeyCode()== KeyEvent.VK_SPACE) {
-            String text = tp_sql.getText();
-            String separador[] = text.split(" ");
+            doc = tp_sql.getStyledDocument();
+            texto = tp_sql.getText();
+            Color crimson = new Color(220,20,60);
+            StyleConstants.setForeground(estilo, crimson);
             
-            /*for (int i = 0; i < separador.length;i++) {
-                if(separador[i].equalsIgnoreCase("create")){
-                    index = i;
-                    
-                    doc.setCharacterAttributes(index, 
-                            6, tp_sql.getStyle("Estilo"), true);
-                }
+            String Regexpattern ="\\b("+String.join("|", keywords)+")\\b";
+            Pattern pattern = Pattern.compile(Regexpattern, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(texto);
+            
+            while(matcher.find()){
+                int inicio = matcher.start();
+                int Final = matcher.end();
+                String coincidencia = texto.substring(inicio, Final);
                 
-            }*/
+                try {
+                    doc.remove(inicio, Final-inicio);
+                    doc.insertString(inicio, coincidencia.toUpperCase(), null);
+                    doc.setCharacterAttributes(inicio, Final-inicio, estilo, false);
+                } catch (Exception e) {
+                }
+            }
         }
     }//GEN-LAST:event_tp_sqlKeyPressed
     
@@ -1228,12 +1239,12 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JTextField tf_nombreIS;
     private javax.swing.JTextPane tp_sql;
     // End of variables declaration//GEN-END:variables
-    public ArrayList<usuario> usuarios = new ArrayList();
-    //usuario u_seleccionado;
+
     usuario u_eliminar;
     //int index_usuario_actual;
     String FileSeleccionado;
     int cont_num_inicio_sesion = 0;
     StyledDocument doc;
     Style estilo;
+    String []keywords ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO","INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"};
 }
