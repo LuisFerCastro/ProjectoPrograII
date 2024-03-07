@@ -5,13 +5,20 @@
 package proyecto_prograii;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -26,9 +33,16 @@ public class PrincipalProyect extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         //usuarios.add(new usuario("Luis", "lfcs123", true, true, true, true, true, true));
-        DefaultListModel modelo = (DefaultListModel)jl_usuarios.getModel();
+        /*DefaultListModel modelo = (DefaultListModel)jl_usuarios.getModel();
         modelo.addElement(new usuario("Luis", "lfcs123", true, true, true, true, true, true));
-        jl_usuarios.setModel(modelo);
+        jl_usuarios.setModel(modelo);*/
+        doc = tp_sql.getStyledDocument();
+        estilo = tp_sql.addStyle("Estilo", null);
+        Color crimson = new Color(220,20,60);
+        StyleConstants.setForeground(estilo, crimson);
+        private final String[]SQL ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO",
+            "INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"
+        };
     }
 
     /**
@@ -67,10 +81,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
         chb_insert = new javax.swing.JCheckBox();
         chb_delete = new javax.swing.JCheckBox();
         chb_drop = new javax.swing.JCheckBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jl_usuarios = new javax.swing.JList<>();
         btn_agregarUsuario = new javax.swing.JButton();
         btn_eliminarUsuario = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jd_modificarUsuario = new javax.swing.JDialog();
         pn_modificar = new javax.swing.JPanel();
         pn_exitMU = new javax.swing.JPanel();
@@ -88,8 +101,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
         pn_DB = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_db = new javax.swing.JTree();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        ta_SQL = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         jtable_db = new javax.swing.JTable();
         lb_tituloDB = new javax.swing.JLabel();
@@ -97,6 +108,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
         lb_sql = new javax.swing.JLabel();
         pn_exitDB = new javax.swing.JPanel();
         lb_exitDB = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tp_sql = new javax.swing.JTextPane();
         jp_is = new javax.swing.JPanel();
         lb_tituloIS = new javax.swing.JLabel();
         lb_nombreIS = new javax.swing.JLabel();
@@ -279,9 +292,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
         chb_drop.setText("Drop");
 
-        jl_usuarios.setModel(new DefaultListModel());
-        jScrollPane1.setViewportView(jl_usuarios);
-
         btn_agregarUsuario.setText("Agregar Usuario");
         btn_agregarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -289,12 +299,14 @@ public class PrincipalProyect extends javax.swing.JFrame {
             }
         });
 
-        btn_eliminarUsuario.setText("Eliminar Usuario");
+        btn_eliminarUsuario.setText("Eliminar Algun Usuario");
         btn_eliminarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_eliminarUsuarioMouseClicked(evt);
             }
         });
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\lfern\\OneDrive\\Imágenes\\imgUser.png")); // NOI18N
 
         javax.swing.GroupLayout pn_GULayout = new javax.swing.GroupLayout(pn_GU);
         pn_GU.setLayout(pn_GULayout);
@@ -303,47 +315,50 @@ public class PrincipalProyect extends javax.swing.JFrame {
             .addGroup(pn_GULayout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(lb_tituloGU, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addComponent(pn_exitGU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
             .addGroup(pn_GULayout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pn_GULayout.createSequentialGroup()
+                .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pn_GULayout.createSequentialGroup()
                         .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chb_GU, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pn_GULayout.createSequentialGroup()
                                 .addComponent(chb_select, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(66, 66, 66)
-                                .addComponent(chb_insert, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))
+                                .addComponent(chb_insert, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lb_nombreGU, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pn_GULayout.createSequentialGroup()
-                        .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_nombreGU, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lb_contraGU, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(pn_GULayout.createSequentialGroup()
-                                    .addComponent(chb_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(chb_drop, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(chb_create, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lb_permisosGU, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(pf_crear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))
-                            .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tf_crear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(pn_GULayout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(btn_agregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_eliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79))
+                        .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pn_GULayout.createSequentialGroup()
+                                .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(pn_GULayout.createSequentialGroup()
+                                            .addComponent(chb_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(chb_drop, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(chb_create, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lb_permisosGU, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(pn_GULayout.createSequentialGroup()
+                                        .addGap(36, 36, 36)
+                                        .addComponent(btn_agregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_eliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pn_GULayout.createSequentialGroup()
+                                .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chb_GU, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lb_contraGU, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(pf_crear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))
+                                    .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tf_crear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)))
+                                .addGap(53, 53, 53)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(115, 115, 115))))
         );
         pn_GULayout.setVerticalGroup(
             pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,21 +387,22 @@ public class PrincipalProyect extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(chb_GU)
-                            .addComponent(chb_create))
-                        .addGap(18, 18, 18)
+                            .addComponent(chb_create)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pn_GULayout.createSequentialGroup()
                         .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(chb_select)
                             .addComponent(chb_insert))
                         .addGap(18, 18, 18)
                         .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(chb_delete)
-                            .addComponent(chb_drop)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(pn_GULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_agregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_eliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(65, Short.MAX_VALUE))
+                            .addComponent(chb_drop))
+                        .addGap(53, 53, 53)
+                        .addComponent(btn_agregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_eliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jd_gestionUsuarios.getContentPane().add(pn_GU, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -502,10 +518,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
         jt_db.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane2.setViewportView(jt_db);
 
-        ta_SQL.setColumns(20);
-        ta_SQL.setRows(5);
-        jScrollPane3.setViewportView(ta_SQL);
-
         jtable_db.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -558,6 +570,13 @@ public class PrincipalProyect extends javax.swing.JFrame {
             .addComponent(lb_exitDB, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
+        tp_sql.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tp_sqlKeyPressed(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tp_sql);
+
         javax.swing.GroupLayout pn_DBLayout = new javax.swing.GroupLayout(pn_DB);
         pn_DB.setLayout(pn_DBLayout);
         pn_DBLayout.setHorizontalGroup(
@@ -565,45 +584,44 @@ public class PrincipalProyect extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_DBLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pn_DBLayout.createSequentialGroup()
-                        .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(13, Short.MAX_VALUE))
-                    .addGroup(pn_DBLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addGap(39, 39, 39)
                         .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pn_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pn_DBLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(12, 12, 12)
                         .addComponent(lb_sql, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addComponent(btn_ejecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))))
+                        .addGap(46, 46, 46))
+                    .addGroup(pn_DBLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         pn_DBLayout.setVerticalGroup(
             pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_DBLayout.createSequentialGroup()
-                .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pn_DBLayout.createSequentialGroup()
-                        .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lb_sql)
-                            .addComponent(btn_ejecutar)))
-                    .addComponent(pn_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(pn_DBLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pn_DBLayout.createSequentialGroup()
+                        .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pn_DBLayout.createSequentialGroup()
+                                .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)
+                                .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lb_sql)
+                                    .addComponent(btn_ejecutar)))
+                            .addComponent(pn_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jd_databasesLayout = new javax.swing.GroupLayout(jd_databases.getContentPane());
@@ -877,10 +895,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 drop = true;
             }
             //usuarios.add(new usuario(nombre, contra, gestionU, create, select, insert, delete, drop));
-            DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
+            /*DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
             m.addElement(new usuario(nombre, contra, gestionU, create, select, insert, delete, drop));
             
-            jl_usuarios.setModel(m);
+            jl_usuarios.setModel(m);*/
             tf_crear.setText("");
             pf_crear.setText("");
             chb_GU.setSelected(false);
@@ -899,7 +917,18 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void btn_eliminarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarUsuarioMouseClicked
         // TODO add your handling code here:
-        if(jl_usuarios.getSelectedIndex()>=0){
+        JFileChooser jfc = new JFileChooser("./usuarios");
+        int seleccion = jfc.showOpenDialog(jd_gestionUsuarios);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File archivo = jfc.getSelectedFile();
+            boolean eliminado = archivo.delete();
+            if(eliminado){
+                JOptionPane.showMessageDialog(jd_gestionUsuarios, "Se ha eliminado el archivo!");
+            }else{
+                JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido eliminar el archivo!");
+            }
+        }
+        /*if(jl_usuarios.getSelectedIndex()>=0){
             
             DefaultListModel m = (DefaultListModel) jl_usuarios.getModel();
             int index = jl_usuarios.getSelectedIndex();
@@ -911,7 +940,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                     usuarios.remove(i);
                     break;
                 } 
-            }*/
+            }
             File eliminar = new File("./usuarios/"+u_eliminar.getNombre()+".txt");
             if(eliminar.exists()){
                 boolean eliminado = eliminar.delete();
@@ -923,7 +952,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
             }else{
                 JOptionPane.showMessageDialog(jd_gestionUsuarios, "No existe el archivo!");
             }
-        }
+        }*/
     }//GEN-LAST:event_btn_eliminarUsuarioMouseClicked
 
     private void btn_GUMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GUMouseClicked
@@ -980,7 +1009,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
         String nuevo_nombre = tf_modificar.getText();
         String nueva_contra = pf_modificar.getText();
         
-        DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
+        /*DefaultListModel m = (DefaultListModel)jl_usuarios.getModel();
         int cont = 0;
         for (int i = 0; i < m.getSize(); i++) {
             for (int j = 0; j < am.listaUsuarios.size(); j++) {
@@ -996,7 +1025,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 }
             }
             
-        }
+        }*/
        
         for (usuario User : am.getListaUsuarios()) {
             User.setNombre(nuevo_nombre);
@@ -1023,7 +1052,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
         
         ((usuario)m.get(index_usuario_actual)).setNombre(nuevo_nombre);
         ((usuario)m.get(index_usuario_actual)).setContra(nueva_contra);*/
-        jl_usuarios.setModel(m);
+        //jl_usuarios.setModel(m);
         tf_modificar.setText("");
         pf_modificar.setText("");
     }//GEN-LAST:event_btn_modificarUMouseClicked
@@ -1050,6 +1079,26 @@ public class PrincipalProyect extends javax.swing.JFrame {
         // TODO add your handling code here:
         abreDatabase();
     }//GEN-LAST:event_btn_databasesMouseClicked
+
+    private void tp_sqlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tp_sqlKeyPressed
+        // TODO add your handling code here:
+        String modificada;
+        int index;
+        if (evt.getKeyCode()== KeyEvent.VK_SPACE) {
+            String text = tp_sql.getText();
+            String separador[] = text.split(" ");
+            
+            /*for (int i = 0; i < separador.length;i++) {
+                if(separador[i].equalsIgnoreCase("create")){
+                    index = i;
+                    
+                    doc.setCharacterAttributes(index, 
+                            6, tp_sql.getStyle("Estilo"), true);
+                }
+                
+            }*/
+        }
+    }//GEN-LAST:event_tp_sqlKeyPressed
     
     public void abreMenuPrincipal(){
         jd_menuprincipal.pack();
@@ -1130,10 +1179,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JLabel img_IS1;
     private javax.swing.JLabel img_MU;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1144,7 +1193,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JDialog jd_gestionUsuarios;
     private javax.swing.JDialog jd_menuprincipal;
     private javax.swing.JDialog jd_modificarUsuario;
-    private javax.swing.JList<String> jl_usuarios;
     private javax.swing.JPanel jp_is;
     private javax.swing.JTree jt_db;
     private javax.swing.JTable jtable_db;
@@ -1178,10 +1226,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JPanel pn_exitMU;
     private javax.swing.JPanel pn_menu;
     private javax.swing.JPanel pn_modificar;
-    private javax.swing.JTextArea ta_SQL;
     private javax.swing.JTextField tf_crear;
     private javax.swing.JTextField tf_modificar;
     private javax.swing.JTextField tf_nombreIS;
+    private javax.swing.JTextPane tp_sql;
     // End of variables declaration//GEN-END:variables
     public ArrayList<usuario> usuarios = new ArrayList();
     //usuario u_seleccionado;
@@ -1189,4 +1237,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
     //int index_usuario_actual;
     String FileSeleccionado;
     int cont_num_inicio_sesion = 0;
+    StyledDocument doc;
+    Style estilo;
 }

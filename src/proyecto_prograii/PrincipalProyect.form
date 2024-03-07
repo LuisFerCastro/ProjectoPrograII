@@ -194,60 +194,67 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                       <Component id="lb_tituloGU" min="-2" pref="481" max="-2" attributes="0"/>
-                      <EmptySpace pref="40" max="32767" attributes="0"/>
+                      <EmptySpace pref="107" max="32767" attributes="0"/>
                       <Component id="pn_exitGU" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="chb_GU" alignment="0" min="-2" pref="133" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="chb_select" min="-2" pref="87" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                                       <Component id="chb_insert" min="-2" pref="112" max="-2" attributes="0"/>
                                   </Group>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jScrollPane1" min="-2" pref="204" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lb_nombreGU" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
-                                  <Component id="lb_contraGU" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="chb_delete" min="-2" pref="87" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="chb_drop" min="-2" pref="87" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                          <Component id="chb_create" min="-2" pref="87" max="-2" attributes="0"/>
-                                          <Component id="lb_permisosGU" min="-2" pref="240" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jSeparator4" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="pf_crear" alignment="0" pref="290" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="tf_crear" alignment="0" pref="288" max="32767" attributes="0"/>
-                                  </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="chb_delete" min="-2" pref="87" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="chb_drop" min="-2" pref="87" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                  <Component id="chb_create" min="-2" pref="87" max="-2" attributes="0"/>
+                                                  <Component id="lb_permisosGU" min="-2" pref="240" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                              <Component id="btn_agregarUsuario" min="-2" pref="188" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="btn_eliminarUsuario" min="-2" pref="227" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="chb_GU" alignment="0" min="-2" pref="133" max="-2" attributes="0"/>
+                                          <Component id="lb_contraGU" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="jSeparator4" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="pf_crear" alignment="0" pref="290" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="tf_crear" alignment="0" pref="288" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                      <Component id="btn_agregarUsuario" min="-2" pref="188" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btn_eliminarUsuario" min="-2" pref="171" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -282,7 +289,12 @@
                                   <Component id="chb_GU" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="chb_create" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jLabel2" min="-2" pref="209" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="chb_select" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="chb_insert" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -292,15 +304,12 @@
                                   <Component id="chb_delete" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="chb_drop" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                              <Component id="btn_agregarUsuario" min="-2" pref="42" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane1" min="-2" pref="305" max="-2" attributes="0"/>
+                          <Component id="btn_eliminarUsuario" min="-2" pref="125" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btn_agregarUsuario" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-                          <Component id="btn_eliminarUsuario" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="65" max="32767" attributes="0"/>
+                      <EmptySpace pref="75" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -407,25 +416,6 @@
                 <Property name="text" type="java.lang.String" value="Drop"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JList" name="jl_usuarios">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new DefaultListModel()" type="code"/>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
             <Component class="javax.swing.JButton" name="btn_agregarUsuario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar Usuario"/>
@@ -436,11 +426,18 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_eliminarUsuario">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Eliminar Usuario"/>
+                <Property name="text" type="java.lang.String" value="Eliminar Algun Usuario"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_eliminarUsuarioMouseClicked"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\lfern\OneDrive\Im&#xe1;genes\imgUser.png"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -638,27 +635,27 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="160" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" min="-2" pref="453" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="13" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Component id="lb_tituloDB" min="-2" pref="214" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="pn_exitDB" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Component id="lb_sql" min="-2" pref="172" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="68" max="32767" attributes="0"/>
                               <Component id="btn_ejecutar" min="-2" pref="177" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jScrollPane5" min="-2" pref="447" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -666,28 +663,28 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lb_tituloDB" min="-2" pref="31" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lb_sql" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btn_ejecutar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="pn_exitDB" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="8" max="32767" attributes="0"/>
-                      <Component id="jScrollPane3" min="-2" pref="107" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" min="-2" pref="339" max="-2" attributes="0"/>
-                      <EmptySpace pref="12" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="493" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lb_tituloDB" min="-2" pref="31" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="lb_sql" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btn_ejecutar" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="pn_exitDB" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jScrollPane5" min="-2" pref="59" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jScrollPane4" min="-2" pref="366" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jScrollPane2" min="-2" pref="493" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="23" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -705,21 +702,6 @@
                     <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
                       <TreeModel code="Databases"/>
                     </Property>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane3">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTextArea" name="ta_SQL">
-                  <Properties>
-                    <Property name="columns" type="int" value="20"/>
-                    <Property name="rows" type="int" value="5"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -802,6 +784,20 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lb_exitDBMouseClicked"/>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lb_exitDBMouseEntered"/>
                     <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lb_exitDBMouseExited"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextPane" name="tp_sql">
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tp_sqlKeyPressed"/>
                   </Events>
                 </Component>
               </SubComponents>
