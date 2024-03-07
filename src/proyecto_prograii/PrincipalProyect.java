@@ -40,9 +40,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
         estilo = tp_sql.addStyle("Estilo", null);
         Color crimson = new Color(220,20,60);
         StyleConstants.setForeground(estilo, crimson);
-        private final String[]SQL ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO",
-            "INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"
-        };
     }
 
     /**
