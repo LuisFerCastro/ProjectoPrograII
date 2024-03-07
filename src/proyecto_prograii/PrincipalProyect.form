@@ -740,6 +740,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ejecutar Comando SQL"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_ejecutarMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lb_sql">
               <Properties>

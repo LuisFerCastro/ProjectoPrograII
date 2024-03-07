@@ -16,12 +16,15 @@ import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTree;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -535,6 +538,11 @@ public class PrincipalProyect extends javax.swing.JFrame {
         lb_tituloDB.setText("Mis Databases");
 
         btn_ejecutar.setText("Ejecutar Comando SQL");
+        btn_ejecutar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_ejecutarMouseClicked(evt);
+            }
+        });
 
         lb_sql.setText("SQL");
 
@@ -761,10 +769,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
             if(tf_nombreIS.getText().equals(am.listaUsuarios.get(i).getNombre())&&pf_contraIS.getText().equals(am.listaUsuarios.get(i).getContra())){
                 cont = 1;
                 //u_seleccionado = (usuario)usuarios.get(i);
-                //index_usuario_actual = i;
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
                 cont_num_inicio_sesion = 1;
                 nombre_user = am.listaUsuarios.get(i).getNombre();
+
             }else{
                 cont = 0;
             }
@@ -1116,6 +1124,44 @@ public class PrincipalProyect extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tp_sqlKeyPressed
+
+    private void btn_ejecutarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ejecutarMouseClicked
+        // TODO add your handling code here:
+        String texto = tp_sql.getText();
+        String separador[] = texto.split(" ");
+        if (tp_sql.getText().contains("CREATE DATABASE")){           
+            if(separador.length < 3||separador.length >3){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                String nombre_db = separador[2];
+                File ndb = new File("./"+nombre_user+"/"+nombre_db);
+                boolean directory = ndb.mkdir();
+                if(directory){
+                    JOptionPane.showMessageDialog(jd_databases, "Se ha creado la database!");
+                }else{
+                    JOptionPane.showMessageDialog(jd_databases, "No se ha creado la database!");
+                }
+                Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
+                DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
+                DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+                raiz.add(new DefaultMutableTreeNode(ndb.getName()));
+                at.cargarArchivo();
+                at.jtrees.add(new Trees(modelo));
+                at.escribirArchivo();
+                tp_sql.setText("");
+                
+            }
+            
+        }
+        else if (tp_sql.getText().contains("DROP DATABASE")){
+            
+        }
+        else if (tp_sql.getText().contains("GRANT DATABASE")){
+            
+        }else{
+            JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto");
+        }
+    }//GEN-LAST:event_btn_ejecutarMouseClicked
     
     public void abreMenuPrincipal(){
         jd_menuprincipal.pack();
@@ -1249,8 +1295,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JTextPane tp_sql;
     // End of variables declaration//GEN-END:variables
 
-    usuario u_eliminar;
-    //int index_usuario_actual;
     String FileSeleccionado;
     int cont_num_inicio_sesion = 0;
     StyledDocument doc;
