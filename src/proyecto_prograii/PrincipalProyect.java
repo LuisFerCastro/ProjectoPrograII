@@ -783,6 +783,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void lb_exitISMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitISMouseClicked
         // TODO add your handling code here:
+        String nombre1 = nombre_user;
         String nombre = "Luis";
         String contra = "lfcs123";
         if (cont_num_inicio_sesion == 0) {
@@ -807,7 +808,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
             File archivoantiguo = new File(FileSeleccionado);
             File archivonuevonombre = new File("./usuarios/"+nombre+".txt");
             boolean renombrado = archivoantiguo.renameTo(archivonuevonombre);
-            if(renombrado){
+            File directory_antiguo = new File("./"+nombre1);
+            File directory_nuevo = new File("./"+nombre);
+            boolean renombrado2 = directory_antiguo.renameTo(directory_nuevo);
+            if(renombrado&&renombrado2){
 
             }else{
 
@@ -936,7 +940,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jd_gestionUsuarios,"No puedes eliminar a tu propio usuario");
             }
             else{
-                JOptionPane.showMessageDialog(jd_gestionUsuarios, nom);
+                
                 boolean eliminado = archivo.delete();
                 File archivo2 = new File("./"+nom_directory);
                 boolean eliminado2 = archivo2.delete();
@@ -1051,7 +1055,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(jd_modificarUsuario, "No se ha podido modificar!");
         }
         FileSeleccionado = "./usuarios/"+nuevo_nombre+".txt";
-        
+        nombre_user = nuevo_nombre;
         /*usuarios.get(index_usuario_actual).setNombre(nuevo_nombre);
         usuarios.get(index_usuario_actual).setContra(nueva_contra);
         
