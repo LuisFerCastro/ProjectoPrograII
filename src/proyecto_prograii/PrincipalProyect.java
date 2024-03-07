@@ -1081,11 +1081,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void tp_sqlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tp_sqlKeyPressed
         // TODO add your handling code here:
-        int cont = 0;
-        String texto = tp_sql.getText();
         if (evt.getKeyCode()== KeyEvent.VK_SPACE) {
             doc = tp_sql.getStyledDocument();
-            texto = tp_sql.getText();
+            String texto = tp_sql.getText();
             Color crimson = new Color(220,20,60);
             StyleConstants.setForeground(estilo, crimson);
             
