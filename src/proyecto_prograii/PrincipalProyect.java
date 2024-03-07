@@ -1038,10 +1038,14 @@ public class PrincipalProyect extends javax.swing.JFrame {
         } catch (IOException ex) {
             
         }
+        String nombre = nombre_user;
         File archivoantiguo = new File(FileSeleccionado);
         File archivonuevonombre = new File("./usuarios/"+nuevo_nombre+".txt");
         boolean renombrado = archivoantiguo.renameTo(archivonuevonombre);
-        if(renombrado){
+        File directory_antiguo = new File("./"+nombre);
+        File directory_nuevo = new File("./"+nuevo_nombre);
+        boolean renombrado2 = directory_antiguo.renameTo(directory_nuevo);
+        if(renombrado && renombrado2){
             JOptionPane.showMessageDialog(jd_modificarUsuario, "Se ha modificado exitosamente.");
         }else{
             JOptionPane.showMessageDialog(jd_modificarUsuario, "No se ha podido modificar!");
