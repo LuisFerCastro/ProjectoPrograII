@@ -929,6 +929,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File archivo = jfc.getSelectedFile();
             String nom = archivo.getName();
+            String nom_directory = archivo.getName().replace(".txt", "");
             String cadena[]=nom.split("\\.");
             String comparar = cadena[0];
             if (comparar.equals(nombre_user)){
@@ -937,7 +938,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
             else{
                 JOptionPane.showMessageDialog(jd_gestionUsuarios, nom);
                 boolean eliminado = archivo.delete();
-                if(eliminado){
+                File archivo2 = new File("./"+nom_directory);
+                boolean eliminado2 = archivo2.delete();
+                if(eliminado && eliminado2){
                     JOptionPane.showMessageDialog(jd_gestionUsuarios, "Se ha eliminado el archivo!");
                 }else{
                     JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido eliminar el archivo!");
