@@ -772,7 +772,23 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
                 cont_num_inicio_sesion = 1;
                 nombre_user = am.listaUsuarios.get(i).getNombre();
-
+                DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
+                DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+                File tree = new File("./"+nombre_user+"/Jtree");
+                if(tree.exists()){
+                    Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
+                    at.cargarArchivo();
+                    DefaultTreeModel n = null;
+                    for (Trees jtree : at.jtrees) {
+                         n = (DefaultTreeModel)jtree.getArbol();        
+                    }
+                    n.reload();
+                    jt_db.setModel(n);
+                }else{
+                    raiz.removeAllChildren();
+                    m.reload();
+                    jt_db.setModel(m);
+                }
             }else{
                 cont = 0;
             }
@@ -791,41 +807,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void lb_exitISMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitISMouseClicked
         // TODO add your handling code here:
-        String nombre1 = nombre_user;
-        String nombre = "Luis";
-        String contra = "lfcs123";
-        if (cont_num_inicio_sesion == 0) {
-            System.exit(0);
-        }else{
-          AdmUsuario am = new AdmUsuario(FileSeleccionado);
-            try {
-                am.cargarArchivo();
-            } catch (IOException ex) {
-
-            }
-
-            for (usuario User : am.getListaUsuarios()) {
-                User.setNombre(nombre);
-                User.setContra(contra);
-            }
-            try {
-                am.escribirArchivo();
-            } catch (IOException ex) {
-
-            }
-            File archivoantiguo = new File(FileSeleccionado);
-            File archivonuevonombre = new File("./usuarios/"+nombre+".txt");
-            boolean renombrado = archivoantiguo.renameTo(archivonuevonombre);
-            File directory_antiguo = new File("./"+nombre1);
-            File directory_nuevo = new File("./"+nombre);
-            boolean renombrado2 = directory_antiguo.renameTo(directory_nuevo);
-            if(renombrado&&renombrado2){
-
-            }else{
-
-            }
-            System.exit(0);  
-        }
+        System.exit(0);
     }//GEN-LAST:event_lb_exitISMouseClicked
 
     private void lb_exitISMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitISMouseEntered
@@ -1148,6 +1130,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 at.cargarArchivo();
                 at.jtrees.add(new Trees(modelo));
                 at.escribirArchivo();
+                modelo.reload();
+                jt_db.setModel(modelo);
                 tp_sql.setText("");
                 
             }
