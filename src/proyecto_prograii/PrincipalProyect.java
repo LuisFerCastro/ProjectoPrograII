@@ -941,31 +941,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 }
             }
         }
-        /*if(jl_usuarios.getSelectedIndex()>=0){
-            
-            DefaultListModel m = (DefaultListModel) jl_usuarios.getModel();
-            int index = jl_usuarios.getSelectedIndex();
-            u_eliminar = (usuario)m.get(index);
-            m.remove(index);
-            jl_usuarios.setModel(m);
-            /*for (int i = 0; i < usuarios.size(); i++) {
-                if(usuarios.get(i).getNombre().equals(u_eliminar.getNombre())&& usuarios.get(i).getContra().equals(u_eliminar.getContra())){
-                    usuarios.remove(i);
-                    break;
-                } 
-            }
-            File eliminar = new File("./usuarios/"+u_eliminar.getNombre()+".txt");
-            if(eliminar.exists()){
-                boolean eliminado = eliminar.delete();
-                if(eliminado){
-                    JOptionPane.showMessageDialog(jd_gestionUsuarios, "Se ha eliminado exitosamente!");
-                }else{
-                   JOptionPane.showMessageDialog(jd_gestionUsuarios, "No se ha podido eliminar!");
-                }
-            }else{
-                JOptionPane.showMessageDialog(jd_gestionUsuarios, "No existe el archivo!");
-            }
-        }*/
+        
     }//GEN-LAST:event_btn_eliminarUsuarioMouseClicked
 
     private void btn_GUMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GUMouseClicked
@@ -1046,12 +1022,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
         }
         FileSeleccionado = "./usuarios/"+nuevo_nombre+".txt";
         nombre_user = nuevo_nombre;
-        /*usuarios.get(index_usuario_actual).setNombre(nuevo_nombre);
-        usuarios.get(index_usuario_actual).setContra(nueva_contra);
-        
-        
-        ((usuario)m.get(index_usuario_actual)).setNombre(nuevo_nombre);
-        ((usuario)m.get(index_usuario_actual)).setContra(nueva_contra);*/
+       
         //jl_usuarios.setModel(m);
         tf_modificar.setText("");
         pf_modificar.setText("");
@@ -1126,7 +1097,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
                 DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-                raiz.add(new DefaultMutableTreeNode(ndb.getName()));
+                raiz.add(new DefaultMutableTreeNode(ndb));
                 at.cargarArchivo();
                 at.jtrees.add(new Trees(modelo));
                 at.escribirArchivo();
@@ -1142,6 +1113,12 @@ public class PrincipalProyect extends javax.swing.JFrame {
         }
         else if (tp_sql.getText().contains("GRANT DATABASE")){
             
+        }else if(tp_sql.getText().contains("CREATE TABLE")){
+            if(separador.length < 3||separador.length >3){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                
+            }
         }else{
             JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto");
         }
@@ -1285,4 +1262,5 @@ public class PrincipalProyect extends javax.swing.JFrame {
     Style estilo;
     String []keywords ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO","INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"};
     String nombre_user;
+    String nombre_db_actual;
 }
