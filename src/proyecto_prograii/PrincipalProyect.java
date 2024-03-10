@@ -1104,7 +1104,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
                 DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-                raiz.add(new DefaultMutableTreeNode(ndb));
+                raiz.add(new DefaultMutableTreeNode(ndb.getName()));
                 at.cargarArchivo();
                 at.jtrees.add(new Trees(modelo));
                 at.escribirArchivo();
@@ -1146,6 +1146,23 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                 AT.tablas.get(0).atributos.add(MAtributos.group(1));
                             }
                             AT.escribirArchivo();
+                            Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
+                            at.cargarArchivo();
+                            File tabla_creada = new File("./"+nombre_user+"/"+nombre_db_actual+"/"+nombreTabla);
+                            DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
+                            DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+                            for (int i = 0; i < raiz.getChildCount(); i++) {
+                                if(raiz.getChildAt(i).toString().equals(nombre_db_actual)){
+                                    DefaultMutableTreeNode padre = (DefaultMutableTreeNode) raiz.getChildAt(i);
+                                    padre.add(new DefaultMutableTreeNode(tabla_creada.getName()));
+                                    
+                                }
+                            }
+                            at.jtrees.add(new Trees(modelo));
+                            at.escribirArchivo();
+                            modelo.reload();
+                            jt_db.setModel(modelo);
+                            JOptionPane.showMessageDialog(jd_databases, "Se ha creado la Tabla exitosamente!");
                         }else{
                             JOptionPane.showMessageDialog(jd_databases, "El elemento seleccionado no es un database!");
                         }
