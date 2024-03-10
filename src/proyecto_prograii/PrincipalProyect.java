@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -777,11 +778,12 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 cont = 1;
                 //u_seleccionado = (usuario)usuarios.get(i);
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
-                cont_num_inicio_sesion = 1;
                 nombre_user = am.listaUsuarios.get(i).getNombre();
                 DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
                 File tree = new File("./"+nombre_user+"/Jtree");
+                DefaultTableModel original = new DefaultTableModel(new Object[]{"Column 1", "Column 2"}, 0);
+                jtable_db.setModel(original);
                 if(tree.exists()){
                     Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
                     at.cargarArchivo();
@@ -1104,7 +1106,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
                 DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-                raiz.add(new DefaultMutableTreeNode(ndb.getName()));
+                raiz.add(new DefaultMutableTreeNode(ndb));
                 at.cargarArchivo();
                 at.jtrees.add(new Trees(modelo));
                 at.escribirArchivo();
@@ -1137,7 +1139,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             if(m.find()){
                                 nombreTabla = m.group();
                             }
-                            AdmTable AT = new AdmTable("./"+nombre_user+"/"+nombre_db_actual+"/"+nombreTabla);
+                            AdmTable AT = new AdmTable(nombre_actual+"/"+nombreTabla);
 
                             Pattern PAtributos = Pattern.compile("\\b(\\w+)\\b(?=[,)])");
                             Matcher MAtributos = PAtributos.matcher(text);
@@ -1148,13 +1150,13 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             AT.escribirArchivo();
                             Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
                             at.cargarArchivo();
-                            File tabla_creada = new File("./"+nombre_user+"/"+nombre_db_actual+"/"+nombreTabla);
+                            File tabla_creada = new File(nombre_actual+"/"+nombreTabla);
                             DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
                             DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
                             for (int i = 0; i < raiz.getChildCount(); i++) {
-                                if(raiz.getChildAt(i).toString().equals(nombre_db_actual)){
+                                if(raiz.getChildAt(i).toString().equals(nombre_actual)){
                                     DefaultMutableTreeNode padre = (DefaultMutableTreeNode) raiz.getChildAt(i);
-                                    padre.add(new DefaultMutableTreeNode(tabla_creada.getName()));
+                                    padre.add(new DefaultMutableTreeNode(tabla_creada));
                                     
                                 }
                             }
@@ -1184,12 +1186,16 @@ public class PrincipalProyect extends javax.swing.JFrame {
         jt_db.setSelectionRow(row);
         Object v1 = jt_db.getSelectionPath().getLastPathComponent();
         nodo_seleccionado = (DefaultMutableTreeNode) v1;  
-        nombre_db_actual = nodo_seleccionado.getUserObject().toString();
-        database_seleccionado = new File("./"+nombre_user+"/"+nombre_db_actual);
-        System.out.println(nombre_db_actual);
-        System.out.println(nombre_user);
-        System.out.println(database_seleccionado);
-        
+        nombre_actual = nodo_seleccionado.getUserObject().toString();
+                
+        if(((File)nodo_seleccionado.getUserObject()).isDirectory()){
+            database_seleccionado = new File(nombre_actual);
+        }else{
+            table_actual = new File(nombre_actual);
+            AdmTable at = new AdmTable(nombre_actual);
+            DefaultTableModel modelo = at.leerTabla();
+            jtable_db.setModel(modelo);
+        }
     }//GEN-LAST:event_jt_dbMouseClicked
     
     public void abreMenuPrincipal(){
@@ -1325,12 +1331,13 @@ public class PrincipalProyect extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     String FileSeleccionado;
-    int cont_num_inicio_sesion = 0;
     StyledDocument doc;
     Style estilo;
     String []keywords ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO","INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"};
     String nombre_user;
-    String nombre_db_actual;
+    String nombre_actual;
     DefaultMutableTreeNode nodo_seleccionado;
     File database_seleccionado;
+    File table_actual;
+    String nombre_table_actual;
 }
