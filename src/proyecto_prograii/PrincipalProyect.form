@@ -703,6 +703,9 @@
                       <TreeModel code="Databases"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jt_dbMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

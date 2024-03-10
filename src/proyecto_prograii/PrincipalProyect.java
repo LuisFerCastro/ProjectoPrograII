@@ -8,7 +8,9 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -518,6 +520,11 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Databases");
         jt_db.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_db.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_dbMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jt_db);
 
         jtable_db.setModel(new javax.swing.table.DefaultTableModel(
@@ -1117,12 +1124,56 @@ public class PrincipalProyect extends javax.swing.JFrame {
             if(separador.length < 3||separador.length >3){
                 JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
             }else{
-                
+                if(database_seleccionado != null){
+                    if(database_seleccionado.exists()){
+                        if(database_seleccionado.isDirectory()){
+                            Date fecha = new Date();
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            String fecha_actual = sdf.format(fecha);
+                            String text = separador[2];
+                            Pattern nombre = Pattern.compile("^\\w+");
+                            Matcher m = nombre.matcher(text);
+                            String nombreTabla ="";
+                            if(m.find()){
+                                nombreTabla = m.group();
+                            }
+                            AdmTable AT = new AdmTable("./"+nombre_user+"/"+nombre_db_actual+"/"+nombreTabla);
+
+                            Pattern PAtributos = Pattern.compile("\\b(\\w+)\\b(?=[,)])");
+                            Matcher MAtributos = PAtributos.matcher(text);
+                            AT.tablas.add(new Table(nombreTabla, nombre_user, fecha_actual));
+                            while(MAtributos.find()){
+                                AT.tablas.get(0).atributos.add(MAtributos.group(1));
+                            }
+                            AT.escribirArchivo();
+                        }else{
+                            JOptionPane.showMessageDialog(jd_databases, "El elemento seleccionado no es un database!");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(jd_databases,"No existe el database seleccionado.");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(jd_databases, "No ha seleccionado ningun database!");
+                }    
             }
         }else{
             JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto");
         }
     }//GEN-LAST:event_btn_ejecutarMouseClicked
+
+    private void jt_dbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_dbMouseClicked
+        // TODO add your handling code here:
+        int row = jt_db.getClosestRowForLocation(evt.getX(), evt.getY());
+        jt_db.setSelectionRow(row);
+        Object v1 = jt_db.getSelectionPath().getLastPathComponent();
+        nodo_seleccionado = (DefaultMutableTreeNode) v1;  
+        nombre_db_actual = nodo_seleccionado.getUserObject().toString();
+        database_seleccionado = new File("./"+nombre_user+"/"+nombre_db_actual);
+        System.out.println(nombre_db_actual);
+        System.out.println(nombre_user);
+        System.out.println(database_seleccionado);
+        
+    }//GEN-LAST:event_jt_dbMouseClicked
     
     public void abreMenuPrincipal(){
         jd_menuprincipal.pack();
@@ -1263,4 +1314,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
     String []keywords ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO","INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"};
     String nombre_user;
     String nombre_db_actual;
+    DefaultMutableTreeNode nodo_seleccionado;
+    File database_seleccionado;
 }
