@@ -1144,27 +1144,32 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             Pattern PAtributos = Pattern.compile("\\b(\\w+)\\b(?=[,)])");
                             Matcher MAtributos = PAtributos.matcher(text);
                             AT.tablas.add(new Table(nombreTabla, nombre_user, fecha_actual));
-                            while(MAtributos.find()){
+                            if(!MAtributos.find()){
+                                JOptionPane.showMessageDialog(jd_databases, "No ha puesto atributos!");
+                            }else{
+                                while(MAtributos.find()){
                                 AT.tablas.get(0).atributos.add(MAtributos.group(1));
-                            }
-                            AT.escribirArchivo();
-                            Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
-                            at.cargarArchivo();
-                            File tabla_creada = new File(nombre_actual+"/"+nombreTabla);
-                            DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
-                            DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-                            for (int i = 0; i < raiz.getChildCount(); i++) {
-                                if(raiz.getChildAt(i).toString().equals(nombre_actual)){
-                                    DefaultMutableTreeNode padre = (DefaultMutableTreeNode) raiz.getChildAt(i);
-                                    padre.add(new DefaultMutableTreeNode(tabla_creada));
-                                    
                                 }
+                                AT.escribirArchivo();
+                                Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
+                                at.cargarArchivo();
+                                File tabla_creada = new File(nombre_actual+"/"+nombreTabla);
+                                DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
+                                DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+                                for (int i = 0; i < raiz.getChildCount(); i++) {
+                                    if(raiz.getChildAt(i).toString().equals(nombre_actual)){
+                                        DefaultMutableTreeNode padre = (DefaultMutableTreeNode) raiz.getChildAt(i);
+                                        padre.add(new DefaultMutableTreeNode(tabla_creada));
+
+                                    }
+                                }
+                                at.jtrees.add(new Trees(modelo));
+                                at.escribirArchivo();
+                                modelo.reload();
+                                jt_db.setModel(modelo);
+                                JOptionPane.showMessageDialog(jd_databases, "Se ha creado la Tabla exitosamente!");
                             }
-                            at.jtrees.add(new Trees(modelo));
-                            at.escribirArchivo();
-                            modelo.reload();
-                            jt_db.setModel(modelo);
-                            JOptionPane.showMessageDialog(jd_databases, "Se ha creado la Tabla exitosamente!");
+                            
                         }else{
                             JOptionPane.showMessageDialog(jd_databases, "El elemento seleccionado no es un database!");
                         }
@@ -1175,9 +1180,44 @@ public class PrincipalProyect extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(jd_databases, "No ha seleccionado ningun database!");
                 }    
             }
+        }else if(tp_sql.getText().contains("INSERT INTO")&&tp_sql.getText().contains("VALUES")){
+            if(separador.length < 4||separador.length >4){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                String text = separador[3];
+                String nombreTabla = separador[2];
+                System.out.println(nombreTabla);
+                File tabla_insertar = new File(nombre_actual);
+                if(tabla_insertar.exists()){
+                    AdmTable AT = new AdmTable(nombre_actual);
+                    AT.leerTabla();
+                    DefaultTableModel m = AT.getModelo();
+                    int cant_columnas = m.getColumnCount();
+                    Pattern PAtributos = Pattern.compile("\\(([^)]+)\\)");
+                    Matcher MAtributos = PAtributos.matcher(text);
+                    ArrayList<String>detalles = new ArrayList();
+                    while(MAtributos.find()){
+                        String []campos = MAtributos.group(1).split(",");
+                        for (String campo : campos) {
+                            detalles.add(campo);
+                        }
+                    }
+                    
+                    if(detalles.size()>cant_columnas){
+                        JOptionPane.showMessageDialog(jd_databases, "Ha sobrepasado la cantidad de columnas en la tabla!");
+                    }else{
+                        String[]datos = detalles.toArray(String[]::new);
+                        AT.tablas.get(0).getDatos().add(datos);
+                        AT.escribirArchivo();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(jd_databases, "La tabla que ha escrito no existe!");
+                }                 
+            }
         }else{
             JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto");
         }
+        tp_sql.setText("");
     }//GEN-LAST:event_btn_ejecutarMouseClicked
 
     private void jt_dbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_dbMouseClicked
@@ -1187,13 +1227,15 @@ public class PrincipalProyect extends javax.swing.JFrame {
         Object v1 = jt_db.getSelectionPath().getLastPathComponent();
         nodo_seleccionado = (DefaultMutableTreeNode) v1;  
         nombre_actual = nodo_seleccionado.getUserObject().toString();
-                
         if(((File)nodo_seleccionado.getUserObject()).isDirectory()){
             database_seleccionado = new File(nombre_actual);
         }else{
+            DefaultTableModel original = new DefaultTableModel(new Object[]{"Column 1", "Column 2"}, 0);
+            jtable_db.setModel(original);
             table_actual = new File(nombre_actual);
             AdmTable at = new AdmTable(nombre_actual);
-            DefaultTableModel modelo = at.leerTabla();
+            at.leerTabla();
+            DefaultTableModel modelo = at.getModelo();
             jtable_db.setModel(modelo);
         }
     }//GEN-LAST:event_jt_dbMouseClicked
