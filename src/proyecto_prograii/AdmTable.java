@@ -95,6 +95,7 @@ public class AdmTable {
     }
     
     public void leerTabla(){
+        tablas = new ArrayList();
         FileReader fr = null;
         BufferedReader br = null;
         String nombreTabla ="";

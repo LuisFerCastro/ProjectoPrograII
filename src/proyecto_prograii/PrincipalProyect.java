@@ -28,6 +28,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 
 /**
  *
@@ -407,10 +408,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
                         .addGap(53, 53, 53)
                         .addComponent(btn_agregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_eliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
-        jd_gestionUsuarios.getContentPane().add(pn_GU, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jd_gestionUsuarios.getContentPane().add(pn_GU, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 560));
 
         jd_modificarUsuario.setUndecorated(true);
         jd_modificarUsuario.setResizable(false);
@@ -764,8 +765,41 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void bttn_entrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttn_entrarMouseClicked
         // TODO add your handling code here:
-        
-        AdmUsuario am = new AdmUsuario("./usuarios/"+tf_nombreIS.getText()+".txt");
+        File prob = new File("./usuarios/"+tf_nombreIS.getText()+".txt");
+        if (prob.exists()){
+            AdmUsuario user = new AdmUsuario("./usuarios/"+tf_nombreIS.getText()+".txt");
+            try {
+                user.cargarArchivo();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            if (user.getListaUsuarios().get(0).getContra().equals(pf_contraIS.getText())){
+                FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
+                nombre_user = tf_nombreIS.getText();
+                DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
+                DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+                raiz.removeAllChildren();
+                DefaultMutableTreeNode b;
+                File ac = new File("./"+tf_nombreIS.getText()+"/");
+                for (File d : ac.listFiles()) {
+                    if(d.getName().equals("Jtree")){
+                        
+                    }
+                    else{
+                        
+                        b = new DefaultMutableTreeNode(d.getName());
+                        raiz.add(b);
+                    }
+                }
+                m.reload();
+                abreMenuPrincipal();
+            }else{
+                JOptionPane.showMessageDialog(jp_is, "Contraseña Incorrecta");
+            }
+        }else{
+            JOptionPane.showMessageDialog(jp_is, "El usuario no existe");
+        }
+        /*AdmUsuario am = new AdmUsuario("./usuarios/"+tf_nombreIS.getText()+".txt");
         try {
             am.cargarArchivo();
         } catch (IOException ex) {
@@ -809,7 +843,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
             abreMenuPrincipal();
         }else{
             JOptionPane.showMessageDialog(this, "Usuario no existe.");
-        }
+        }*/
         tf_nombreIS.setText("");
         pf_contraIS.setText("");
     }//GEN-LAST:event_bttn_entrarMouseClicked
@@ -1106,7 +1140,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
                 DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-                raiz.add(new DefaultMutableTreeNode(ndb));
+                raiz.add(new DefaultMutableTreeNode(new Database(nombre_db)));
+                //raiz.add(new DefaultMutableTreeNode(ndb));
                 at.cargarArchivo();
                 at.jtrees.add(new Trees(modelo));
                 at.escribirArchivo();
@@ -1118,10 +1153,171 @@ public class PrincipalProyect extends javax.swing.JFrame {
             
         }
         else if (tp_sql.getText().contains("DROP DATABASE")){
-            
+            if(separador.length < 3||separador.length >3){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                
+                String nombre_db = separador[2];
+                File usr = new File("./"+nombre_user+"/"+nombre_db);
+                if (usr.exists()){
+                    if (usr.delete()){
+                        File fh = new File("./usuarios/");
+                        for (File c : fh.listFiles()) {
+                            if(c.getName().equals(nombre_user+".txt")){
+                                
+                            }
+                            else{
+                                String tx = c.getName().substring(0, c.getName().length()-4);
+                                File x = new File("./"+tx+"/"+nombre_db);
+                                if (x.exists()){
+                                    if(x.delete()){
+                                        AdmUsuario l = new AdmUsuario("./usuarios"+"/"+tx+".txt");
+                                        try {
+                                            l.cargarArchivo();
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                            for (Database h : l.getListaUsuarios().get(0).getDatabases()) {
+                                                if (h.getNameDB().equals(nombre_db)){
+                                                    l.getListaUsuarios().get(0).getDatabases().remove(h);
+                                                    break;
+                                                }
+                                            }
+
+                                        try {
+                                            l.escribirArchivo();
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        tp_sql.setText(""); 
+                        DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
+                        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+                        raiz.removeAllChildren();
+                        DefaultMutableTreeNode b;
+                        File ac = new File("./"+tf_nombreIS.getText()+"/");
+                        for (File d : ac.listFiles()) {
+                            if(d.getName().equals("Jtree")){
+
+                            }
+                            else{
+
+                                b = new DefaultMutableTreeNode(d.getName());
+                                raiz.add(b);
+                            }
+                        }
+                        m.reload();        
+                        JOptionPane.showMessageDialog(jd_databases, "El archivo fue eliminado con exito");
+                        AdmUsuario l = new AdmUsuario("./usuarios"+"/"+nombre_user+".txt");
+                    try {
+                        l.cargarArchivo();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                        for (Database h : l.getListaUsuarios().get(0).getDatabases()) {
+                            if (h.getNameDB().equals(nombre_db)){
+                                l.getListaUsuarios().get(0).getDatabases().remove(h);
+                                break;
+                            }
+                        }
+                            
+                    try {
+                        l.escribirArchivo();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(jd_databases, "El archivo no se pudo eliminar");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(jd_databases, "El archivo no existe");
+                }
+            }
+            tp_sql.setText("");
         }
         else if (tp_sql.getText().contains("GRANT DATABASE")){
-            
+            if(separador.length < 5||separador.length >5){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                String nombre_dar = separador[4];
+                String nombre_db = separador[2];
+                File gg = new File("./"+nombre_dar+"/"+nombre_db);
+                if(gg.exists()){
+                    JOptionPane.showMessageDialog(jd_databases, "El usuario seleccionado ya tiene esta database");
+                }
+                else{
+                    File ac = new File("./"+nombre_user+"/"+nombre_db);
+                    if (ac.exists()){
+                        if(nombre_user.equals(nombre_dar)){
+                            JOptionPane.showMessageDialog(jd_databases, "Ya tienes acceso a este archivo");
+                        }else{
+                            File ac2 = new File("./usuarios/"+nombre_dar+".txt");
+                            if (ac2.exists()){
+                                File ac3 = new File("./"+nombre_dar+"/"+nombre_db);
+                                boolean directory = ac3.mkdir();
+                                if (directory){
+                                    AdmUsuario l = new AdmUsuario("./usuarios"+"/"+nombre_dar+".txt");
+                                    try {
+                                        l.cargarArchivo();
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                    Database d = new Database(nombre_db);
+                                    d.getPermisos().add(new Permisos(true,true,true,true));
+                                    l.getListaUsuarios().get(0).getDatabases().add(d);
+                                    try {
+                                        l.escribirArchivo();
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                    DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
+                                    DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+                                    raiz.removeAllChildren();
+                                    DefaultMutableTreeNode b;
+                                    File ac4 = new File("./"+tf_nombreIS.getText()+"/");
+                                    for (File h : ac4.listFiles()) {
+                                        if(h.getName().equals("Jtree")){
+
+                                        }
+                                        else{
+
+                                            b = new DefaultMutableTreeNode(h.getName());
+                                            raiz.add(b);
+                                        }
+                                    }
+                                    m.reload();
+//                                    Adm_Trees at = new Adm_Trees("./"+nombre_dar+"/Jtree");
+//                                    DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
+//                                    DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+//                                    raiz.add(new DefaultMutableTreeNode(ac3.getName()));
+//                                    at.cargarArchivo();
+//                                    at.jtrees.add(new Trees(modelo));
+//                                    at.escribirArchivo();
+//                                    modelo.reload();
+//                                    jt_db.setModel(modelo);
+                                    JOptionPane.showMessageDialog(jd_databases, "Se a compartido el database con exito");
+                                }
+                                else{
+                                    JOptionPane.showMessageDialog(jd_databases, "No se a podido compartir el database");
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(jd_databases, "El usuario que "
+                                        + "le quiere transferir la database no existe");
+                            }
+
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(jd_databases, "El archivo que intentas dar acceso no existe");
+                    }
+                }
+                tp_sql.setText("");
+            }
         }else if(tp_sql.getText().contains("CREATE TABLE")){
             if(separador.length < 3||separador.length >3){
                 JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
@@ -1133,39 +1329,50 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                             String fecha_actual = sdf.format(fecha);
                             String text = separador[2];
-                            Pattern nombre = Pattern.compile("^\\w+");
+                            Pattern nombre = Pattern.compile("\\w+(?=\\()");
                             Matcher m = nombre.matcher(text);
                             String nombreTabla ="";
                             if(m.find()){
                                 nombreTabla = m.group();
+                                System.out.println(nombreTabla);
                             }
-                            AdmTable AT = new AdmTable(nombre_actual+"/"+nombreTabla);
-
+                            AdmTable AT = new AdmTable("./"+nombre_user+"/"+nombre_actual+"/"+nombreTabla);
+                            
                             Pattern PAtributos = Pattern.compile("\\b(\\w+)\\b(?=[,)])");
-                            Matcher MAtributos = PAtributos.matcher(text);
+                            Matcher MAtributos = PAtributos.matcher(separador[2]);
+                            ArrayList<String> encontrados = new ArrayList();
                             AT.tablas.add(new Table(nombreTabla, nombre_user, fecha_actual));
-                            if(!MAtributos.find()){
+                            boolean encontrado = MAtributos.find();
+                            if(!encontrado){
                                 JOptionPane.showMessageDialog(jd_databases, "No ha puesto atributos!");
                             }else{
+                                encontrados.add(MAtributos.group(1));
                                 while(MAtributos.find()){
-                                AT.tablas.get(0).atributos.add(MAtributos.group(1));
+                                encontrados.add(MAtributos.group(1));
+                                //AT.tablas.get(0).atributos.add(MAtributos.group(1));
+                                   
                                 }
+                                
+                                
+                                
+                                AT.tablas.get(0).setAtributos(encontrados);
                                 AT.escribirArchivo();
                                 Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
                                 at.cargarArchivo();
-                                File tabla_creada = new File(nombre_actual+"/"+nombreTabla);
+                                AT.leerTabla();
+                                //File tabla_creada = new File("./"+nombre_user+"/"+nombre_actual+"/"+nombreTabla);
                                 DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
                                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
                                 for (int i = 0; i < raiz.getChildCount(); i++) {
                                     if(raiz.getChildAt(i).toString().equals(nombre_actual)){
                                         DefaultMutableTreeNode padre = (DefaultMutableTreeNode) raiz.getChildAt(i);
-                                        padre.add(new DefaultMutableTreeNode(tabla_creada));
-
+                                        padre.add(new DefaultMutableTreeNode(AT.tablas.get(0)));
+                                        
                                     }
                                 }
+                                modelo.reload();
                                 at.jtrees.add(new Trees(modelo));
                                 at.escribirArchivo();
-                                modelo.reload();
                                 jt_db.setModel(modelo);
                                 JOptionPane.showMessageDialog(jd_databases, "Se ha creado la Tabla exitosamente!");
                             }
@@ -1187,9 +1394,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 String text = separador[3];
                 String nombreTabla = separador[2];
                 System.out.println(nombreTabla);
-                File tabla_insertar = new File(nombre_actual);
+                File tabla_insertar = new File("./"+nombre_user+"/"+padre_name+"/"+nombre_actual);
                 if(tabla_insertar.exists()){
-                    AdmTable AT = new AdmTable(nombre_actual);
+                    AdmTable AT = new AdmTable("./"+nombre_user+"/"+padre_name+"/"+nombre_actual);
                     AT.leerTabla();
                     DefaultTableModel m = AT.getModelo();
                     int cant_columnas = m.getColumnCount();
@@ -1227,7 +1434,23 @@ public class PrincipalProyect extends javax.swing.JFrame {
         Object v1 = jt_db.getSelectionPath().getLastPathComponent();
         nodo_seleccionado = (DefaultMutableTreeNode) v1;  
         nombre_actual = nodo_seleccionado.getUserObject().toString();
-        if(((File)nodo_seleccionado.getUserObject()).isDirectory()){
+        if(nodo_seleccionado.getUserObject() instanceof Database){
+            database_seleccionado = new File("./"+nombre_user+"/"+nombre_actual);
+            System.out.println(database_seleccionado);
+        }else if(nodo_seleccionado.getUserObject()instanceof Table){
+            DefaultMutableTreeNode padre = (DefaultMutableTreeNode) nodo_seleccionado.getParent();
+            padre_name = padre.getUserObject().toString();
+            System.out.println(padre_name);
+            System.out.println(nombre_actual);
+            DefaultTableModel original = new DefaultTableModel(new Object[]{"Column 1", "Column 2"}, 0);
+            jtable_db.setModel(original);
+            table_actual = new File("./"+nombre_user+"/"+padre_name+"/"+nombre_actual);
+            AdmTable at = new AdmTable("./"+nombre_user+"/"+padre_name+"/"+nombre_actual);
+            at.leerTabla();
+            DefaultTableModel modelo = at.getModelo();
+            jtable_db.setModel(modelo);
+        }
+        /*if(((File)nodo_seleccionado.getUserObject()).isDirectory()){
             database_seleccionado = new File(nombre_actual);
         }else{
             DefaultTableModel original = new DefaultTableModel(new Object[]{"Column 1", "Column 2"}, 0);
@@ -1237,7 +1460,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
             at.leerTabla();
             DefaultTableModel modelo = at.getModelo();
             jtable_db.setModel(modelo);
-        }
+        }*/
     }//GEN-LAST:event_jt_dbMouseClicked
     
     public void abreMenuPrincipal(){
@@ -1378,6 +1601,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
     String []keywords ={"CREATE","DROP","SELECT","FROM","WHERE","AND","OR","GRANT","DATABASE","TO","INSERT","INTO","VALUES","TABLE","UPDATE","SET","DELETE","TRUNCATE"};
     String nombre_user;
     String nombre_actual;
+    String padre_name;
     DefaultMutableTreeNode nodo_seleccionado;
     File database_seleccionado;
     File table_actual;
