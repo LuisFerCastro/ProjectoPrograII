@@ -18,22 +18,21 @@ import javax.swing.JTree;
  * @author lfern
  */
 public class Adm_Trees {
-    ArrayList<Trees> jtrees = new ArrayList();
+    Trees arbol;
+    //ArrayList<Trees> jtrees = new ArrayList();
     File archivo = null;
 
     public Adm_Trees(String path) {
         archivo = new File(path);
     }
 
-    public ArrayList<Trees> getJtrees() {
+    /*public ArrayList<Trees> getJtrees() {
         return jtrees;
     }
 
     public void setJtrees(ArrayList<Trees> jtrees) {
         this.jtrees = jtrees;
-    }
-
-    
+    }*/
 
     public File getArchivo() {
         return archivo;
@@ -45,8 +44,9 @@ public class Adm_Trees {
 
     @Override
     public String toString() {
-        return "Adm_Trees{" + "jtrees=" + jtrees + ", archivo=" + archivo + '}';
+        return "Adm_Trees{" + "arbol=" + arbol + ", archivo=" + archivo + '}';
     }
+
     
     public void escribirArchivo(){
         FileOutputStream salida = null;
@@ -54,9 +54,7 @@ public class Adm_Trees {
         try {
             salida = new FileOutputStream(archivo);
             objeto = new ObjectOutputStream(salida);
-            for (Trees jtree : jtrees) {
-                objeto.writeObject(jtree);
-            }
+            objeto.writeObject(arbol);
             objeto.flush();
         } catch (Exception e) {
         }
@@ -70,16 +68,19 @@ public class Adm_Trees {
     public void cargarArchivo(){
         FileInputStream fw = null;
         ObjectInputStream ow = null;
-        Trees temp;
-        jtrees = new ArrayList();
+        /*Trees temp;
+        jtrees = new ArrayList();*/
         if(archivo.exists()){
             try {
                 fw = new FileInputStream(archivo);
                 ow = new ObjectInputStream(fw);
                 try {
-                    while((temp = (Trees)ow.readObject())!= null){
-                        jtrees.add(temp);
+                    if((arbol = (Trees)ow.readObject()) != null){
+                        arbol = (Trees)ow.readObject();
                     }
+                    /*while((temp = (Trees)ow.readObject())!= null){
+                        jtrees.add(temp);
+                    }*/
                 } catch (EOFException e) {
                 }
        

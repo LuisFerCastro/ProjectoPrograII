@@ -776,6 +776,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
             if (user.getListaUsuarios().get(0).getContra().equals(pf_contraIS.getText())){
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
                 nombre_user = tf_nombreIS.getText();
+                
                 DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
                 raiz.removeAllChildren();
@@ -792,6 +793,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
                     }
                 }
                 m.reload();
+                DefaultTableModel original = new DefaultTableModel(new Object[]{"Column 1", "Column 2"}, 0);
+                jtable_db.setModel(original);
                 abreMenuPrincipal();
             }else{
                 JOptionPane.showMessageDialog(jp_is, "Contraseña Incorrecta");
@@ -1141,9 +1144,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 DefaultTreeModel modelo = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
                 raiz.add(new DefaultMutableTreeNode(new Database(nombre_db)));
-                //raiz.add(new DefaultMutableTreeNode(ndb));
+                //raiz.add(new DefaultMutableTreeNode(ndb));  
                 at.cargarArchivo();
-                at.jtrees.add(new Trees(modelo));
+                at.arbol = new Trees(modelo);
+                //at.jtrees.add(new Trees(modelo));
                 at.escribirArchivo();
                 modelo.reload();
                 jt_db.setModel(modelo);
@@ -1371,7 +1375,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                     }
                                 }
                                 modelo.reload();
-                                at.jtrees.add(new Trees(modelo));
+                                //at.jtrees.clear();
+                                //at.jtrees.add(new Trees(modelo));
+                                at.arbol = new Trees(modelo);
                                 at.escribirArchivo();
                                 jt_db.setModel(modelo);
                                 JOptionPane.showMessageDialog(jd_databases, "Se ha creado la Tabla exitosamente!");
@@ -1417,9 +1423,27 @@ public class PrincipalProyect extends javax.swing.JFrame {
                         AT.tablas.get(0).getDatos().add(datos);
                         AT.escribirArchivo();
                     }
+                    
                 }else{
                     JOptionPane.showMessageDialog(jd_databases, "La tabla que ha escrito no existe!");
                 }                 
+            }
+        }else if(tp_sql.getText().contains("SELECT")&&tp_sql.getText().contains("FROM")){
+            
+        }else if(tp_sql.getText().contains("SELECT")&&tp_sql.getText().contains("FROM") && tp_sql.getText().contains("WHERE")){
+            
+        }else if(tp_sql.getText().contains("UPDATE")&&tp_sql.getText().contains("SET") && tp_sql.getText().contains("WHERE")){
+            
+        }else if(tp_sql.getText().contains("DELETE FROM")&&tp_sql.getText().contains("WHERE")){
+            
+        }else if(tp_sql.getText().contains("TRUNCATE TABLE")){
+            
+        }else if(tp_sql.getText().contains("DROP TABLE")){
+            if(separador.length < 3||separador.length >3){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                String nombre = separador[3];
+                
             }
         }else{
             JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto");
@@ -1429,12 +1453,30 @@ public class PrincipalProyect extends javax.swing.JFrame {
 
     private void jt_dbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_dbMouseClicked
         // TODO add your handling code here:
+        DefaultTreeModel m = (DefaultTreeModel) jt_db.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
         int row = jt_db.getClosestRowForLocation(evt.getX(), evt.getY());
         jt_db.setSelectionRow(row);
         Object v1 = jt_db.getSelectionPath().getLastPathComponent();
         nodo_seleccionado = (DefaultMutableTreeNode) v1;  
         nombre_actual = nodo_seleccionado.getUserObject().toString();
-        if(nodo_seleccionado.getUserObject() instanceof Database){
+        if(nodo_seleccionado.getChildCount() == 0 && !raiz.isNodeChild(nodo_seleccionado)){
+            DefaultMutableTreeNode padre = (DefaultMutableTreeNode) nodo_seleccionado.getParent();
+            padre_name = padre.getUserObject().toString();
+            System.out.println(padre_name);
+            System.out.println(nombre_actual);
+            DefaultTableModel original = new DefaultTableModel(new Object[]{"Column 1", "Column 2"}, 0);
+            jtable_db.setModel(original);
+            table_actual = new File("./"+nombre_user+"/"+padre_name+"/"+nombre_actual);
+            AdmTable at = new AdmTable("./"+nombre_user+"/"+padre_name+"/"+nombre_actual);
+            at.leerTabla();
+            DefaultTableModel modelo = at.getModelo();
+            jtable_db.setModel(modelo);
+        }else{
+            database_seleccionado = new File("./"+nombre_user+"/"+nombre_actual);
+            System.out.println(database_seleccionado);
+        }
+        /*if(nodo_seleccionado.getUserObject() instanceof Database){
             database_seleccionado = new File("./"+nombre_user+"/"+nombre_actual);
             System.out.println(database_seleccionado);
         }else if(nodo_seleccionado.getUserObject()instanceof Table){
