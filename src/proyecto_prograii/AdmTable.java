@@ -57,13 +57,13 @@ public class AdmTable {
             fw = new FileWriter(archivo, false);
             bw = new BufferedWriter(fw);
             for (Table tabla : tablas) {
-                bw.write("Tabla: "+tabla.getNombre());
+                bw.write("Tabla:"+tabla.getNombre());
                 bw.newLine();
-                bw.write("Creador: "+tabla.getCreador());
+                bw.write("Creador:"+tabla.getCreador());
                 bw.newLine();
-                bw.write("Fecha: "+tabla.getFecha());
+                bw.write("Fecha:"+tabla.getFecha());
                 bw.newLine();
-                bw.write("Atributos: ");
+                bw.write("Atributos:");
                 for (int i = 0; i < tabla.getAtributos().size(); i++) {
                     bw.write(tabla.atributos.get(i));
                     if(i < tabla.atributos.size()-1){
