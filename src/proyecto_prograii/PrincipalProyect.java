@@ -1508,8 +1508,14 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                     Table tabla = at.tablas.get(0);
                                     for (int j = 0; j < tabla.datos.size();j++) {
                                         for (int i = 0; i < tabla.datos.get(j).length; i++) {
-                                             int num = Integer.parseInt(tabla.datos.get(j)[i]);
-                                              int valorInt = Integer.parseInt(valor);
+                                            int num = -1;
+                                            int valorInt = -2;
+                                            try {
+                                                num = Integer.parseInt(tabla.datos.get(j)[i]);
+                                                valorInt = Integer.parseInt(valor);
+                                            } catch (Exception e) {
+                                            }
+                                             
                                             if(operador.equals("=")){
                                                 if(num==valorInt|| valor.equals(tabla.datos.get(j)[i])){ 
                                                     tabla.datos.remove(j);
@@ -1561,6 +1567,12 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             at.leerTabla();
                             at.tablas.get(0).datos.clear();
                             at.escribirArchivo();
+                            boolean deleted = tabla.delete();
+                            if(deleted){
+                                
+                            }else{
+                                JOptionPane.showMessageDialog(jd_databases, "No se ha podido eliminar la tabla!");
+                            }
                         }else{
                             JOptionPane.showMessageDialog(jd_databases, "La tabla que ha proporcionado no existe!");
                         }
