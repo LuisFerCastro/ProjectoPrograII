@@ -1357,8 +1357,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                    
                                 }
                                 
-                                
-                                
                                 AT.tablas.get(0).setAtributos(encontrados);
                                 AT.escribirArchivo();
                                 Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
@@ -1433,18 +1431,80 @@ public class PrincipalProyect extends javax.swing.JFrame {
         }else if(tp_sql.getText().contains("SELECT")&&tp_sql.getText().contains("FROM") && tp_sql.getText().contains("WHERE")){
             
         }else if(tp_sql.getText().contains("UPDATE")&&tp_sql.getText().contains("SET") && tp_sql.getText().contains("WHERE")){
-            
+            if(separador.length < 6||separador.length >6){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                if(database_seleccionado != null){
+                    String nombre = separador[1];
+                    String argumento = separador[3];
+                    String where = separador[5];
+                    try {
+                        String []sepArg = argumento.split("=");
+                        String []sepWhere = where.split("=");
+                        String name_Campo = sepArg[0];
+                        Object nuevo_value = sepArg[1];
+                        String name_Value = sepWhere[0];
+                        String nameBuscar = sepWhere[1];
+                        File tabla = new File("./"+nombre_user+"/"+nombre_actual+"/"+nombre);
+                        if(tabla.exists()){
+                            AdmTable at = new AdmTable("./"+nombre_user+"/"+nombre_actual+"/"+nombre);
+                            at.leerTabla();
+                        }else{
+                            JOptionPane.showMessageDialog(jd_databases,"No existe la tabla!");
+                        }
+                        
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(jd_databases, "Error con el formato del comando!");
+                    }
+                    
+                    
+                }else{
+                    JOptionPane.showMessageDialog(jd_databases, "No ha seleccioando un database!");
+                }
+            }
         }else if(tp_sql.getText().contains("DELETE FROM")&&tp_sql.getText().contains("WHERE")){
             
         }else if(tp_sql.getText().contains("TRUNCATE TABLE")){
-            
+             if(separador.length < 3||separador.length >3){
+                JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+            }else{
+                 if(database_seleccionado != null){
+                     String nombre = separador[2];
+                        File tabla = new File("./"+nombre_user+"/"+nombre_actual+"/"+nombre);
+                        if(tabla.exists()){
+                            AdmTable at = new AdmTable("./"+nombre_user+"/"+nombre_actual+"/"+nombre);
+                            at.leerTabla();
+                            at.tablas.get(0).datos.clear();
+                            at.escribirArchivo();
+                        }else{
+                            JOptionPane.showMessageDialog(jd_databases, "La tabla que ha proporcionado no existe!");
+                        }
+                 }else{
+                     JOptionPane.showMessageDialog(jd_databases, "No ha seleccionado ningun database!");
+                 }  
+             }
         }else if(tp_sql.getText().contains("DROP TABLE")){
             if(separador.length < 3||separador.length >3){
                 JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
             }else{
-                String nombre = separador[3];
-                
-            }
+                if(database_seleccionado != null){
+                    String nombre = separador[2];
+                    DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
+                    DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+                    for (int i = 0; i < raiz.getChildCount(); i++) {
+                        if(raiz.getChildAt(i).toString().equals(nombre_actual)){
+                            for (int j = 0; j < raiz.getChildAt(i).getChildCount(); j++) {
+                                if(raiz.getChildAt(i).getChildAt(j).toString().equals(nombre)){
+                                    m.removeNodeFromParent((MutableTreeNode) raiz.getChildAt(i).getChildAt(j));
+                                }
+                            }
+                        }
+                    }
+                    m.reload();
+                }else{
+                    JOptionPane.showMessageDialog(jd_databases, "No ha seleccionado ningun database!");
+                }
+            } 
         }else{
             JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto");
         }
@@ -1647,5 +1707,6 @@ public class PrincipalProyect extends javax.swing.JFrame {
     DefaultMutableTreeNode nodo_seleccionado;
     File database_seleccionado;
     File table_actual;
-    String nombre_table_actual;
+    String nombre_db;
+    //String nombre_table_actual;
 }
