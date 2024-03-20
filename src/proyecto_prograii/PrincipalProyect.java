@@ -4,7 +4,11 @@
  */
 package proyecto_prograii;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -16,10 +20,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.crypto.AEADBadTagException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
+import javax.swing.Popup;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -117,6 +124,18 @@ public class PrincipalProyect extends javax.swing.JFrame {
         lb_exitDB = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tp_sql = new javax.swing.JTextPane();
+        btn_diagramar = new javax.swing.JButton();
+        jd_SQL = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        pn_exitSQL = new javax.swing.JPanel();
+        lb_exitSQL = new javax.swing.JLabel();
+        cb_SQL = new javax.swing.JComboBox<>();
+        btn_SQL = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        pp_diagramar = new javax.swing.JPopupMenu();
+        jmi_limpiar = new javax.swing.JMenuItem();
+        jd_diagramar = new javax.swing.JDialog();
+        PanelDiagrama = new javax.swing.JPanel();
         jp_is = new javax.swing.JPanel();
         lb_tituloIS = new javax.swing.JLabel();
         lb_nombreIS = new javax.swing.JLabel();
@@ -594,6 +613,13 @@ public class PrincipalProyect extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tp_sql);
 
+        btn_diagramar.setText("Diagramar");
+        btn_diagramar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_diagramarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pn_DBLayout = new javax.swing.GroupLayout(pn_DB);
         pn_DB.setLayout(pn_DBLayout);
         pn_DBLayout.setHorizontalGroup(
@@ -605,6 +631,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
                     .addGroup(pn_DBLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(btn_diagramar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pn_exitDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pn_DBLayout.createSequentialGroup()
@@ -627,8 +655,13 @@ public class PrincipalProyect extends javax.swing.JFrame {
                     .addGroup(pn_DBLayout.createSequentialGroup()
                         .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pn_DBLayout.createSequentialGroup()
-                                .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
+                                .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pn_DBLayout.createSequentialGroup()
+                                        .addComponent(lb_tituloDB, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(9, 9, 9))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_DBLayout.createSequentialGroup()
+                                        .addComponent(btn_diagramar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(pn_DBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lb_sql)
                                     .addComponent(btn_ejecutar)))
@@ -650,6 +683,134 @@ public class PrincipalProyect extends javax.swing.JFrame {
         jd_databasesLayout.setVerticalGroup(
             jd_databasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pn_DB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jd_SQL.setUndecorated(true);
+        jd_SQL.setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+
+        pn_exitSQL.setBackground(new java.awt.Color(255, 255, 255));
+
+        lb_exitSQL.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lb_exitSQL.setForeground(new java.awt.Color(0, 0, 0));
+        lb_exitSQL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_exitSQL.setText("X");
+        lb_exitSQL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_exitSQLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_exitSQLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_exitSQLMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pn_exitSQLLayout = new javax.swing.GroupLayout(pn_exitSQL);
+        pn_exitSQL.setLayout(pn_exitSQLLayout);
+        pn_exitSQLLayout.setHorizontalGroup(
+            pn_exitSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lb_exitSQL, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+        );
+        pn_exitSQLLayout.setVerticalGroup(
+            pn_exitSQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lb_exitSQL, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+        );
+
+        btn_SQL.setBackground(new java.awt.Color(51, 51, 51));
+        btn_SQL.setForeground(new java.awt.Color(255, 255, 255));
+        btn_SQL.setText("Seleccionar SQL");
+        btn_SQL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_SQLMouseClicked(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Comandos SQLs Ejecutados");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(70, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(pn_exitSQL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(cb_SQL, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_SQL, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pn_exitSQL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(39, 39, 39)
+                .addComponent(cb_SQL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(btn_SQL, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jd_SQLLayout = new javax.swing.GroupLayout(jd_SQL.getContentPane());
+        jd_SQL.getContentPane().setLayout(jd_SQLLayout);
+        jd_SQLLayout.setHorizontalGroup(
+            jd_SQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jd_SQLLayout.setVerticalGroup(
+            jd_SQLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_SQLLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jmi_limpiar.setText("Limpiar");
+        jmi_limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_limpiarActionPerformed(evt);
+            }
+        });
+        pp_diagramar.add(jmi_limpiar);
+
+        PanelDiagrama.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PanelDiagramaMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelDiagramaLayout = new javax.swing.GroupLayout(PanelDiagrama);
+        PanelDiagrama.setLayout(PanelDiagramaLayout);
+        PanelDiagramaLayout.setHorizontalGroup(
+            PanelDiagramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 586, Short.MAX_VALUE)
+        );
+        PanelDiagramaLayout.setVerticalGroup(
+            PanelDiagramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 420, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jd_diagramarLayout = new javax.swing.GroupLayout(jd_diagramar.getContentPane());
+        jd_diagramar.getContentPane().setLayout(jd_diagramarLayout);
+        jd_diagramarLayout.setHorizontalGroup(
+            jd_diagramarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelDiagrama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jd_diagramarLayout.setVerticalGroup(
+            jd_diagramarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelDiagrama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -778,6 +939,14 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 FileSeleccionado = "./usuarios/"+tf_nombreIS.getText()+".txt";
                 nombre_user = tf_nombreIS.getText();
                 
+                File tree = new File("./"+nombre_user+"/Jtree");
+                if(tree.exists()){
+                    Adm_Trees at = new Adm_Trees("./"+nombre_user+"/Jtree");
+                    at.cargarArchivo();
+                    DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
+                    DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+                    
+                }
                 DefaultTreeModel m = (DefaultTreeModel)jt_db.getModel();
                 DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
                 raiz.removeAllChildren();
@@ -1108,8 +1277,19 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 at.escribirArchivo();
                 modelo.reload();
                 jt_db.setModel(modelo);
-                tp_sql.setText("");
-                
+                File sql = new File("./"+nombre_user+"/SQL");
+                Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                if(sql.exists()){
+                    sq.cargarArchivo();
+                    sq.sqls.add(texto);
+                    sq.escribirArchivo();
+                }else{
+                    sq.escribirArchivo();
+                    sq.cargarArchivo();
+                    sq.sqls.add(texto);
+                    sq.escribirArchivo();
+                }
+                     
             }
             
         }
@@ -1118,8 +1298,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
             }else{
                 
-                String nombre_db = separador[2];
-                File usr = new File("./"+nombre_user+"/"+nombre_db);
+                String nombreDB = separador[2];
+                File usr = new File("./"+nombre_user+"/"+nombreDB);
                 if (usr.exists()){
                     if (usr.delete()){
                         File fh = new File("./usuarios/");
@@ -1129,7 +1309,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             }
                             else{
                                 String tx = c.getName().substring(0, c.getName().length()-4);
-                                File x = new File("./"+tx+"/"+nombre_db);
+                                File x = new File("./"+tx+"/"+nombreDB);
                                 if (x.exists()){
                                     if(x.delete()){
                                         AdmUsuario l = new AdmUsuario("./usuarios"+"/"+tx+".txt");
@@ -1139,7 +1319,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                             ex.printStackTrace();
                                         }
                                             for (Database h : l.getListaUsuarios().get(0).getDatabases()) {
-                                                if (h.getNameDB().equals(nombre_db)){
+                                                if (h.getNameDB().equals(nombreDB)){
                                                     l.getListaUsuarios().get(0).getDatabases().remove(h);
                                                     break;
                                                 }
@@ -1179,7 +1359,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                         ex.printStackTrace();
                     }
                         for (Database h : l.getListaUsuarios().get(0).getDatabases()) {
-                            if (h.getNameDB().equals(nombre_db)){
+                            if (h.getNameDB().equals(nombreDB)){
                                 l.getListaUsuarios().get(0).getDatabases().remove(h);
                                 break;
                             }
@@ -1190,8 +1370,19 @@ public class PrincipalProyect extends javax.swing.JFrame {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
+                    File sql = new File("./"+nombre_user+"/SQL");
+                    Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                    if(sql.exists()){
+                        sq.cargarArchivo();
+                        sq.sqls.add(texto);
+                        sq.escribirArchivo();
+                    }else{
+                        sq.escribirArchivo();
+                        sq.cargarArchivo();
+                        sq.sqls.add(texto);
+                        sq.escribirArchivo();
                     }
-                    else{
+                    }else{
                         JOptionPane.showMessageDialog(jd_databases, "El archivo no se pudo eliminar");
                     }
                 }
@@ -1206,20 +1397,20 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
             }else{
                 String nombre_dar = separador[4];
-                String nombre_db = separador[2];
-                File gg = new File("./"+nombre_dar+"/"+nombre_db);
+                String nombredb = separador[2];
+                File gg = new File("./"+nombre_dar+"/"+nombredb);
                 if(gg.exists()){
                     JOptionPane.showMessageDialog(jd_databases, "El usuario seleccionado ya tiene esta database");
                 }
                 else{
-                    File ac = new File("./"+nombre_user+"/"+nombre_db);
+                    File ac = new File("./"+nombre_user+"/"+nombredb);
                     if (ac.exists()){
                         if(nombre_user.equals(nombre_dar)){
                             JOptionPane.showMessageDialog(jd_databases, "Ya tienes acceso a este archivo");
                         }else{
                             File ac2 = new File("./usuarios/"+nombre_dar+".txt");
                             if (ac2.exists()){
-                                File ac3 = new File("./"+nombre_dar+"/"+nombre_db);
+                                File ac3 = new File("./"+nombre_dar+"/"+nombredb);
                                 boolean directory = ac3.mkdir();
                                 if (directory){
                                     AdmUsuario l = new AdmUsuario("./usuarios"+"/"+nombre_dar+".txt");
@@ -1228,7 +1419,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                     } catch (IOException ex) {
                                         ex.printStackTrace();
                                     }
-                                    Database d = new Database(nombre_db);
+                                    Database d = new Database(nombredb);
                                     d.getPermisos().add(new Permisos(true,true,true,true));
                                     l.getListaUsuarios().get(0).getDatabases().add(d);
                                     try {
@@ -1261,6 +1452,18 @@ public class PrincipalProyect extends javax.swing.JFrame {
 //                                    at.escribirArchivo();
 //                                    modelo.reload();
 //                                    jt_db.setModel(modelo);
+                                    File sql = new File("./"+nombre_user+"/SQL");
+                                    Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                                    if(sql.exists()){
+                                        sq.cargarArchivo();
+                                        sq.sqls.add(texto);
+                                        sq.escribirArchivo();
+                                    }else{
+                                        sq.escribirArchivo();
+                                        sq.cargarArchivo();
+                                        sq.sqls.add(texto);
+                                        sq.escribirArchivo();
+                                    }
                                     JOptionPane.showMessageDialog(jd_databases, "Se a compartido el database con exito");
                                 }
                                 else{
@@ -1335,7 +1538,19 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                 at.arbol = new Trees(modelo);
                                 at.escribirArchivo();
                                 jt_db.setModel(modelo);
-                                JOptionPane.showMessageDialog(jd_databases, "Se ha creado la Tabla exitosamente!");
+                                File sql = new File("./"+nombre_user+"/SQL");
+                                Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                                if(sql.exists()){
+                                    sq.cargarArchivo();
+                                    sq.sqls.add(texto);
+                                    sq.escribirArchivo();
+                                }else{
+                                    sq.escribirArchivo();
+                                    sq.cargarArchivo();
+                                    sq.sqls.add(texto);
+                                    sq.escribirArchivo();
+                                }
+                                JOptionPane.showMessageDialog(jd_databases, "Se ha creado la Tabla exitosamente!");     
                             }
                             
                         }else{
@@ -1378,7 +1593,19 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             String[]datos = detalles.toArray(String[]::new);
                             AT.tablas.get(0).getDatos().add(datos);
                             AT.escribirArchivo();
-                            JOptionPane.showMessageDialog(jd_databases, "Se ha insertado la informacion!");
+                            File sql = new File("./"+nombre_user+"/SQL");
+                            Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                            if(sql.exists()){
+                                sq.cargarArchivo();
+                                sq.sqls.add(texto);
+                                sq.escribirArchivo();
+                            }else{
+                                sq.escribirArchivo();
+                                sq.cargarArchivo();
+                                sq.sqls.add(texto);
+                                sq.escribirArchivo();
+                            }
+                            JOptionPane.showMessageDialog(jd_databases, "Se ha insertado la informacion!");  
                         }
                         
                     }else{
@@ -1389,9 +1616,9 @@ public class PrincipalProyect extends javax.swing.JFrame {
                 }
                     
             }
-        }else if(tp_sql.getText().contains("SELECT")&&tp_sql.getText().contains("FROM")){
+        }else if(tp_sql.getText().contains("SELECT")&&tp_sql.getText().contains("FROM")&& tp_sql.getText().contains("WHERE")){
             
-        }else if(tp_sql.getText().contains("SELECT")&&tp_sql.getText().contains("FROM") && tp_sql.getText().contains("WHERE")){
+        }else if(tp_sql.getText().contains("SELECT")&&tp_sql.getText().contains("FROM")){
             
         }else if(tp_sql.getText().contains("UPDATE")&&tp_sql.getText().contains("SET") && tp_sql.getText().contains("WHERE")){
             if(separador.length < 6||separador.length >6){
@@ -1452,6 +1679,18 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                 }
                                 at.tablas.set(0, m);
                                 at.escribirArchivo();
+                                File sql = new File("./"+nombre_user+"/SQL");
+                                Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                                if(sql.exists()){
+                                    sq.cargarArchivo();
+                                    sq.sqls.add(texto);
+                                    sq.escribirArchivo();
+                                }else{
+                                    sq.escribirArchivo();
+                                    sq.cargarArchivo();
+                                    sq.sqls.add(texto);
+                                    sq.escribirArchivo();
+                                }
                                 JOptionPane.showMessageDialog(jd_databases, "Se ha modificado la informacion!");
                             }else{
                                 JOptionPane.showMessageDialog(jd_databases, "Ha proporcionado un argumento incorrecto!");
@@ -1482,13 +1721,16 @@ public class PrincipalProyect extends javax.swing.JFrame {
                         String operador = null;
                         String valor = null;
                         
-                        Pattern patron = Pattern.compile("(\\w+)([><=])(\\d+)");
+                        Pattern patron = Pattern.compile("(\\w+)([><=])(\\d+|\\w+)");
                         Matcher m = patron.matcher(campo);
                         
-                        if(m.find()){
+                        if(m.matches()){
                             nombre_Campo = m.group(1);
+                            System.out.println(nombre_Campo);
                             operador = m.group(2);
+                            System.out.println(operador);
                             valor = m.group(3);
+                            System.out.println(valor);
                             int cont = 0;
                             File Table = new File("./"+nombre_user+"/"+nombre_actual+"/"+nombreTabla);
                         
@@ -1506,45 +1748,59 @@ public class PrincipalProyect extends javax.swing.JFrame {
                                 }
                                 if(cont == 1){
                                     Table tabla = at.tablas.get(0);
-                                    for (int j = 0; j < tabla.datos.size();j++) {
-                                        for (int i = 0; i < tabla.datos.get(j).length; i++) {
-                                            int num = -1;
-                                            int valorInt = -2;
-                                            try {
-                                                num = Integer.parseInt(tabla.datos.get(j)[i]);
-                                                valorInt = Integer.parseInt(valor);
-                                            } catch (Exception e) {
+                                    ArrayList<String[]> nuevaLista = new ArrayList();
+                                    for (String[] dato : tabla.datos) {
+                                        boolean mantener = false;
+                                        for (int i = 0; i < dato.length; i++) {
+                                            String data = dato[i];
+                                            if(esEntero(data)){
+                                                int num = Integer.parseInt(data);
+                                                int valorInt = Integer.parseInt(valor);
+                                                if (operador.equals("=") && num == valorInt) {
+                                                    mantener = true;
+                                                    break;
+                                                } else if (operador.equals(">") && num > valorInt) {
+                                                    mantener = true;
+                                                    break;
+                                                } else if (operador.equals("<") && num < valorInt) {
+                                                    mantener = true;
+                                                    break;
+                                                }
+                                            }else{
+                                                if (operador.equals("=") && dato.equals(valor)) {
+                                                    mantener = true;
+                                                    break;
+                                                }
                                             }
-                                             
-                                            if(operador.equals("=")){
-                                                if(num==valorInt|| valor.equals(tabla.datos.get(j)[i])){ 
-                                                    tabla.datos.remove(j);
-                                                    j--;
-                                                }
-                                            }else if(operador.equals(">")){
-                                                //int num = Integer.parseInt(String.valueOf(tabla.datos.get(i)));
-                                                if(num > valorInt){
-                                                    tabla.datos.remove(j);
-                                                    j--;
-                                                }
-                                            }else if(operador.equals("<")){
-                                               //int num = Integer.parseInt(String.valueOf(tabla.datos.get(i)));
-                                                if(num < valorInt){
-                                                    tabla.datos.remove(j);
-                                                    j--;
-                                                } 
+                                            if (mantener) {
+                                                nuevaLista.add(dato); // Agregar el registro a la nueva lista
                                             }
                                         }
                                     }
+                                    
+                                    tabla.setDatos(nuevaLista);
                                     at.tablas.set(0, tabla);
                                     at.escribirArchivo();
+                                    File sql = new File("./"+nombre_user+"/SQL");
+                                    Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                                    if(sql.exists()){
+                                        sq.cargarArchivo();
+                                        sq.sqls.add(texto);
+                                        sq.escribirArchivo();
+                                    }else{
+                                        sq.escribirArchivo();
+                                        sq.cargarArchivo();
+                                        sq.sqls.add(texto);
+                                        sq.escribirArchivo();
+                                    }
+                                    JOptionPane.showMessageDialog(jd_databases, "Registro eliminado!");
                                 }
                                 
                             }else{
                                 JOptionPane.showMessageDialog(jd_databases, "No existe esa tabla!");
                             }
                         }else{
-                            JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
+                            //JOptionPane.showMessageDialog(jd_databases, "Comando SQL incorrecto!");
                         }
                         
                     } catch (Exception e) {
@@ -1573,6 +1829,18 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             }else{
                                 JOptionPane.showMessageDialog(jd_databases, "No se ha podido eliminar la tabla!");
                             }
+                            File sql = new File("./"+nombre_user+"/SQL");
+                            Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                            if(sql.exists()){
+                                sq.cargarArchivo();
+                                sq.sqls.add(texto);
+                                sq.escribirArchivo();
+                            }else{
+                                sq.escribirArchivo();
+                                sq.cargarArchivo();
+                                sq.sqls.add(texto);
+                                sq.escribirArchivo();
+                            }
                         }else{
                             JOptionPane.showMessageDialog(jd_databases, "La tabla que ha proporcionado no existe!");
                         }
@@ -1598,6 +1866,18 @@ public class PrincipalProyect extends javax.swing.JFrame {
                         }
                     }
                     m.reload();
+                    File sql = new File("./"+nombre_user+"/SQL");
+                    Adm_SQL sq = new Adm_SQL("./"+nombre_user+"/SQL");
+                    if(sql.exists()){
+                        sq.cargarArchivo();
+                        sq.sqls.add(texto);
+                        sq.escribirArchivo();
+                    }else{
+                        sq.escribirArchivo();
+                        sq.cargarArchivo();
+                        sq.sqls.add(texto);
+                        sq.escribirArchivo();
+                    }
                 }else{
                     JOptionPane.showMessageDialog(jd_databases, "No ha seleccionado ningun database!");
                 }
@@ -1608,6 +1888,14 @@ public class PrincipalProyect extends javax.swing.JFrame {
         tp_sql.setText("");
     }//GEN-LAST:event_btn_ejecutarMouseClicked
 
+    public static boolean esEntero(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     private void jt_dbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_dbMouseClicked
         // TODO add your handling code here:
         DefaultTreeModel m = (DefaultTreeModel) jt_db.getModel();
@@ -1617,7 +1905,15 @@ public class PrincipalProyect extends javax.swing.JFrame {
         Object v1 = jt_db.getSelectionPath().getLastPathComponent();
         nodo_seleccionado = (DefaultMutableTreeNode) v1;  
         nombre_actual = nodo_seleccionado.getUserObject().toString();
-        if(nodo_seleccionado.getChildCount() == 0 && !raiz.isNodeChild(nodo_seleccionado)){
+        if(nombre_actual.equals("SQL")||nombre_actual.equals("./"+nombre_user+"/SQL")){
+            Adm_SQL ad = new Adm_SQL("./"+nombre_user+"/SQL");
+            ad.cargarArchivo();
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_SQL.getModel();
+            modelo.removeAllElements();
+            modelo.addAll(ad.sqls);
+            cb_SQL.setModel(modelo);
+            abreSQL();
+        }else if(nodo_seleccionado.getChildCount() == 0 && !raiz.isNodeChild(nodo_seleccionado)){
             DefaultMutableTreeNode padre = (DefaultMutableTreeNode) nodo_seleccionado.getParent();
             padre_name = padre.getUserObject().toString();
             System.out.println(padre_name);
@@ -1635,6 +1931,68 @@ public class PrincipalProyect extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jt_dbMouseClicked
+
+    private void lb_exitSQLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitSQLMouseClicked
+        // TODO add your handling code here:
+        jd_SQL.setVisible(false);
+    }//GEN-LAST:event_lb_exitSQLMouseClicked
+
+    private void lb_exitSQLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitSQLMouseEntered
+        // TODO add your handling code here:
+        pn_exitSQL.setBackground(Color.red);
+        lb_exitSQL.setForeground(Color.white);
+    }//GEN-LAST:event_lb_exitSQLMouseEntered
+
+    private void lb_exitSQLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_exitSQLMouseExited
+        // TODO add your handling code here:
+        pn_exitSQL.setBackground(Color.white);
+        lb_exitSQL.setForeground(Color.black);
+    }//GEN-LAST:event_lb_exitSQLMouseExited
+
+    private void btn_SQLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SQLMouseClicked
+        // TODO add your handling code here:
+        if(cb_SQL.getSelectedItem() != null){
+            String linea = (String) cb_SQL.getSelectedItem();
+            tp_sql.setText(linea);
+            jd_SQL.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(jd_SQL, "No ha seleccionado nada!");
+        }
+    }//GEN-LAST:event_btn_SQLMouseClicked
+
+    private void btn_diagramarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_diagramarMouseClicked
+        // TODO add your handling code here:
+        jd_diagramar.pack();
+        jd_diagramar.setModal(true);
+        jd_diagramar.setLocationRelativeTo(jd_databases);
+        jd_diagramar.setVisible(true);
+    }//GEN-LAST:event_btn_diagramarMouseClicked
+
+    private void jmi_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_limpiarActionPerformed
+        // TODO add your handling code here:
+        PanelDiagrama.repaint();
+        PanelDiagrama.removeAll();
+    }//GEN-LAST:event_jmi_limpiarActionPerformed
+
+    private void PanelDiagramaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelDiagramaMouseClicked
+        // TODO add your handling code here:
+        if(evt.getButton()==3){
+            pp_diagramar.show(PanelDiagrama, evt.getX(), evt.getY());
+        }else{
+            Stroke stroke = new BasicStroke(5f);
+            if(startX == -1 && startY == -1){
+                startX = evt.getX();
+                startY = evt.getY();
+            }else{
+                Graphics grafico = PanelDiagrama.getGraphics();
+                Graphics2D graficos2 = (Graphics2D)grafico;
+                graficos2.setStroke(stroke);
+                graficos2.drawLine(startX, startY, evt.getX(), evt.getY());
+                startX = -1;
+                startY = -1;
+            }
+        }
+    }//GEN-LAST:event_PanelDiagramaMouseClicked
     
     public void abreMenuPrincipal(){
         jd_menuprincipal.pack();
@@ -1660,6 +2018,12 @@ public class PrincipalProyect extends javax.swing.JFrame {
         jd_databases.setModal(true);
         jd_databases.setLocationRelativeTo(jd_menuprincipal);
         jd_databases.setVisible(true);
+    }
+    public void abreSQL(){
+        jd_SQL.pack();
+        jd_SQL.setModal(true);
+        jd_SQL.setLocationRelativeTo(jd_databases);
+        jd_SQL.setVisible(true);
     }
     /**
      * @param args the command line arguments
@@ -1698,14 +2062,18 @@ public class PrincipalProyect extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelDiagrama;
     private javax.swing.JButton btn_GU;
+    private javax.swing.JButton btn_SQL;
     private javax.swing.JButton btn_agregarUsuario;
     private javax.swing.JButton btn_databases;
+    private javax.swing.JButton btn_diagramar;
     private javax.swing.JButton btn_ejecutar;
     private javax.swing.JButton btn_eliminarUsuario;
     private javax.swing.JButton btn_modif;
     private javax.swing.JButton btn_modificarU;
     private javax.swing.JButton bttn_entrar;
+    private javax.swing.JComboBox<String> cb_SQL;
     private javax.swing.JCheckBox chb_GU;
     private javax.swing.JCheckBox chb_create;
     private javax.swing.JCheckBox chb_delete;
@@ -1716,6 +2084,8 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JLabel img_MU;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -1725,10 +2095,13 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JDialog jd_SQL;
     private javax.swing.JDialog jd_databases;
+    private javax.swing.JDialog jd_diagramar;
     private javax.swing.JDialog jd_gestionUsuarios;
     private javax.swing.JDialog jd_menuprincipal;
     private javax.swing.JDialog jd_modificarUsuario;
+    private javax.swing.JMenuItem jmi_limpiar;
     private javax.swing.JPanel jp_is;
     private javax.swing.JTree jt_db;
     private javax.swing.JTable jtable_db;
@@ -1739,6 +2112,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JLabel lb_exitIS;
     private javax.swing.JLabel lb_exitMP;
     private javax.swing.JLabel lb_exitMU;
+    private javax.swing.JLabel lb_exitSQL;
     private javax.swing.JLabel lb_nombreGU;
     private javax.swing.JLabel lb_nombreIS;
     private javax.swing.JLabel lb_nombreMU;
@@ -1760,8 +2134,10 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JPanel pn_exitIS;
     private javax.swing.JPanel pn_exitMP;
     private javax.swing.JPanel pn_exitMU;
+    private javax.swing.JPanel pn_exitSQL;
     private javax.swing.JPanel pn_menu;
     private javax.swing.JPanel pn_modificar;
+    private javax.swing.JPopupMenu pp_diagramar;
     private javax.swing.JTextField tf_crear;
     private javax.swing.JTextField tf_modificar;
     private javax.swing.JTextField tf_nombreIS;
@@ -1779,5 +2155,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
     File database_seleccionado;
     File table_actual;
     String nombre_db;
+    int startX = -1;
+    int startY=-1;
     //String nombre_table_actual;
 }
