@@ -134,6 +134,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         pp_diagramar = new javax.swing.JPopupMenu();
         jmi_limpiar = new javax.swing.JMenuItem();
+        jmi_tabla = new javax.swing.JMenuItem();
         jd_diagramar = new javax.swing.JDialog();
         PanelDiagrama = new javax.swing.JPanel();
         jp_is = new javax.swing.JPanel();
@@ -785,6 +786,14 @@ public class PrincipalProyect extends javax.swing.JFrame {
         });
         pp_diagramar.add(jmi_limpiar);
 
+        jmi_tabla.setText("Imprimir Tabla");
+        jmi_tabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_tablaActionPerformed(evt);
+            }
+        });
+        pp_diagramar.add(jmi_tabla);
+
         PanelDiagrama.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PanelDiagramaMouseClicked(evt);
@@ -885,7 +894,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
                             .addGroup(jp_isLayout.createSequentialGroup()
                                 .addGap(64, 64, 64)
                                 .addComponent(bttn_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(9, Short.MAX_VALUE))
+                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(jp_isLayout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(lb_tituloIS, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1993,6 +2002,32 @@ public class PrincipalProyect extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_PanelDiagramaMouseClicked
+
+    private void jmi_tablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_tablaActionPerformed
+        // TODO add your handling code here:
+        int x = pp_diagramar.getX() + pp_diagramar.getWidth();
+        int y = pp_diagramar.getY() + pp_diagramar.getHeight();
+        String database = JOptionPane.showInputDialog("Nombre de la database.");
+        String tabla = JOptionPane.showInputDialog("Nombre de la tabla.");
+        File archivo = new File("./"+nombre_user+"/"+database+"/"+tabla);
+        if(archivo.exists()){
+            Graphics grafico = PanelDiagrama.getGraphics();
+            Graphics2D graficos2 = (Graphics2D)grafico;
+            AdmTable at = new AdmTable("./"+nombre_user+"/"+database+"/"+tabla);
+            at.leerTabla();
+            DefaultTableModel model = at.getModelo();
+            for (int row = 0; row < model.getRowCount(); row++) {
+                for (int col = 0; col < model.getColumnCount(); col++) {
+                    Object value = model.getValueAt(row, col);
+                    String text = (value == null) ? "" : value.toString();
+                    graficos2.drawString(text, x + col * 100, y + row * 20 + 20);
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(jd_diagramar, "Algun dato que ha proporcionado es incorrecto!");
+        }
+           
+    }//GEN-LAST:event_jmi_tablaActionPerformed
     
     public void abreMenuPrincipal(){
         jd_menuprincipal.pack();
@@ -2102,6 +2137,7 @@ public class PrincipalProyect extends javax.swing.JFrame {
     private javax.swing.JDialog jd_menuprincipal;
     private javax.swing.JDialog jd_modificarUsuario;
     private javax.swing.JMenuItem jmi_limpiar;
+    private javax.swing.JMenuItem jmi_tabla;
     private javax.swing.JPanel jp_is;
     private javax.swing.JTree jt_db;
     private javax.swing.JTable jtable_db;
